@@ -1,3 +1,4 @@
+import "node-libs-react-native/globals.js";
 import "react-native-get-random-values";
 // Add global shims
 import "@account-kit/react-native";
