@@ -22,13 +22,10 @@ export default function TabOneScreen() {
 
 	if (!user) return null;
 
-	console.log("[Main Index] Wallet address", user?.address);
-
 	useEffect(() => {
 		const _balance = async () => {
 			const bal = await client?.getBalance({ address: user.address, blockTag: 'latest' });
 			setMyBalance(bal);
-			console.log("[MAIN INDEX] Balance ", bal, Number(bal));
 		}
 		_balance()
 	}, [client]);
