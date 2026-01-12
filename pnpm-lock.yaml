@@ -17,6 +17,9 @@ importers:
       '@account-kit/react-native-signer':
         specifier: ^4.52.2
         version: 4.82.0(6106e6a366c4b2047a7b738435c0d4dc)
+      '@account-kit/signer':
+        specifier: ^4.82.0
+        version: 4.82.0(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@account-kit/smart-contracts':
         specifier: ^4.52.2
         version: 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
@@ -14125,7 +14128,7 @@ snapshots:
 
   '@turnkey/webauthn-stamper@0.4.3':
     dependencies:
-      '@noble/hashes': 1.7.1
+      '@noble/hashes': 1.8.0
       buffer: 6.0.3
 
   '@turnkey/webauthn-stamper@0.5.1':

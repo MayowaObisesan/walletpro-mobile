@@ -14,7 +14,13 @@
       "backgroundColor": "#ffffff"
     },
     "extra": {
-      "EXPO_PUBLIC_ALCHEMY_API_KEY": "anykeyhere"
+      "EXPO_PUBLIC_ALCHEMY_API_KEY": "ZD_ZC1-j-ke_Fhw9qfjCdo5CyZGsgVfQ",
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "a5ea2541-4957-4a3a-b99f-f1e6c3d39fbe"
+      }
     },
     "ios": {
       "supportsTablet": true,

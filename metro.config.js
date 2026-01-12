@@ -6,10 +6,10 @@ const projectRoot = __dirname; // <-- Adjust this as fits your project setup
 
 // Add aliases for file-system import based modules
 const ALIASES = {
-	"@noble/hashes/crypto": path.resolve(
-		projectRoot,
-		"node_modules/@noble/hashes/crypto.js",
-	),
+	// "@noble/hashes/crypto": path.resolve(
+	// 	projectRoot,
+	// 	"node_modules/@noble/hashes/crypto.js",
+	// ),
 	"@sinclair/typebox": path.resolve(
 		projectRoot,
 		"node_modules/@sinclair/typebox/build/cjs/index.js",
