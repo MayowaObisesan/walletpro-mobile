@@ -28,7 +28,7 @@ export default function MainLayout() {
 				options={{
 					title: "Welcome!",
 					header: () => (
-						<View style={[styles.header, { paddingTop: top + 10 }]}>
+						<View style={[styles.header]}>
 							<Pressable
 								style={{
 									marginLeft: "auto",

@@ -11,7 +11,7 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { AlchemyAuthSessionProvider } from "@src/context/AlchemyAuthSessionProvider";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import { Platform } from "react-native";
 
 export { ErrorBoundary } from "expo-router";
@@ -50,25 +50,37 @@ function RootLayoutNav() {
 	return (
 		<AlchemyAuthSessionProvider>
 			<SafeAreaProvider>
-				<Stack
-					screenOptions={{
-						headerShown: false,
-					}}
-				>
-					<Stack.Screen
-						name="otp-modal"
-						options={{
-							presentation:
-								Platform.OS === "ios"
-									? "formSheet"
-									: "containedTransparentModal",
-							animation:
-								Platform.OS === "android"
-									? "slide_from_bottom"
-									: "default",
+				<SafeAreaView style={{ flex: 1 }}>
+					<Stack
+						screenOptions={{
+							headerShown: false,
 						}}
-					/>
-				</Stack>
+					>
+						<Stack.Screen
+							name="otp-modal"
+							options={{
+								presentation:
+									Platform.OS === "ios"
+										? "formSheet"
+										: "containedTransparentModal",
+								animation:
+									Platform.OS === "android"
+										? "slide_from_bottom"
+										: "default",
+							}}
+						/>
+						<Stack.Screen
+							name="accounts/index"
+							options={{
+								animation:
+									Platform.OS === "android"
+										? "slide_from_bottom"
+										: "default",
+								headerShown: true,
+							}}
+						/>
+					</Stack>
+				</SafeAreaView>
 			</SafeAreaProvider>
 		</AlchemyAuthSessionProvider>
 	);
