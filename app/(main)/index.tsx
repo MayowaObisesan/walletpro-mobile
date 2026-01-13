@@ -1,11 +1,19 @@
 import {useUser, useSmartAccountClient, useChain} from "@account-kit/react-native";
-import {StyleSheet, View, Text, Linking, ScrollView, ActivityIndicator} from "react-native";
+import {StyleSheet, View, Linking, ScrollView, ActivityIndicator, Pressable} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import * as AvatarPrimitive from '@rn-primitives/avatar';
 import {shortenAddress} from "@src/utils";
-import {Link} from "expo-router";
-import {useEffect, useState} from "react";
+import {Link, router} from "expo-router";
+import React, {useEffect, useState} from "react";
 import {formatEther} from "viem";
+import {Text} from "@src/components/ui/text";
+import {BottomNavigation} from "@src/components/Navigation";
+import {PageBody, PageContainer, PageHeader, PageHeading} from "@src/components/PageSection";
+import {Button} from "@src/components/ui/button";
+import {ThemeToggle} from "@src/components/ThemeToggle";
+import Feather from "@expo/vector-icons/Feather";
+import {Avatar, AvatarFallback, AvatarImage} from "@src/components/ui/avatar";
+import {ChainSelect} from "@src/components/ChainSelect";
 
 const GITHUB_AVATAR_URI = 'https://github.com/mrzachnugent.png';
 
@@ -38,79 +46,108 @@ export default function TabOneScreen() {
 	}
 
 	return (
-		<ScrollView
-			contentContainerStyle={{
-				flexGrow: 1,
-			}}
-		>
-			<View style={styles.container}>
-				<Text
-					style={[
-						styles.userText,
-						{
-							fontSize: 50,
-						},
-					]}
+		<PageContainer>
+			<PageHeader>
+				<View className={'flex-1 flex flex-row items-center justify-end p-2'}>
+					<Button size={'icon'} variant={'ghost'}>
+						<ThemeToggle />
+					</Button>
+					<ChainSelect />
+					<Pressable
+						style={{
+							marginLeft: "auto",
+						}}
+						// Workaround on Android: https://github.com/expo/expo/issues/33093#issuecomment-2587684514
+						onPressIn={() => router.navigate("/menu")}
+					>
+						{({ pressed }) => (
+							<Text>
+								<Feather
+									name="menu"
+									size={25}
+									style={{
+										marginRight: 15,
+										opacity: pressed ? 0.5 : 1,
+									}}
+								/>
+							</Text>
+						)}
+					</Pressable>
+					<Avatar
+						alt="Zach Nugent's Avatar"
+						className={'size-12'}
+					>
+						<AvatarImage source={{ uri: '' }} />
+						<AvatarFallback>
+							<Text>BM</Text>
+						</AvatarFallback>
+					</Avatar>
+				</View>
+			</PageHeader>
+			<PageBody>
+				<ScrollView
+					contentContainerStyle={{
+						flexGrow: 1,
+					}}
 				>
-					Welcome!
-				</Text>
-				{/*<Text style={styles.userText}>{user.email}</Text>*/}
-				<View style={styles.separator} />
-
-				<AvatarPrimitive.Root alt="Zach Nugent's Avatar">
-					<AvatarPrimitive.Image source={{ uri: GITHUB_AVATAR_URI }} />
-					<AvatarPrimitive.Fallback>
-						<Text>ZN</Text>
-					</AvatarPrimitive.Fallback>
-				</AvatarPrimitive.Root>
-
-				{/* User Details */}
-				<View>
-					<Text style={styles.userText}>OrgId: {user.orgId}</Text>
-					<Text style={styles.userText}>Address: {shortenAddress(user.address)}</Text>
-					<Text style={styles.userText}>Solana Address: {user.solanaAddress}</Text>
-					{
-						!!myBalance?.toString()
-						&& <Text style={styles.userText}>Balance: {formatEther(myBalance as bigint, 'wei')} {chain.nativeCurrency.symbol}</Text>
-					}
-					<Text style={styles.userText}>Chain: {chain.name} - {chain.id} - {chain.nativeCurrency.name}</Text>
-					<Text style={styles.userText}>
-						Light Account Address: {account?.address}
-					</Text>
-				</View>
-
-				<View style={styles.separator} />
-
-				<View>
-					<Link href={'/accounts'}>Accounts Screen</Link>
-					<Link href={'/send'}>Send Screen</Link>
-					<Link href={'/history'}>History Screen</Link>
-					<Link href={'/settings'}>Settings Screen</Link>
-				</View>
-
-				{/* Documentation Info */}
-				<View style={{ marginTop: "auto", marginBottom: bottom }}>
-					<Text style={[styles.userText, { marginBottom: 20 }]}>
-						Now that you have a smart account setup, visit our docs
-						to learn how to use this account to send sponsored and
-						unsponsored user operatons 👇🏽
-					</Text>
-
-					<View>
+					<View style={styles.container}>
 						<Text
-							onPress={() =>
-								Linking.openURL(
-									"https://accountkit.alchemy.com/react-native/using-smart-accounts/send-user-operations"
-								)
-							}
-							style={[styles.userText, styles.documentationLink]}
+							style={[
+								styles.userText,
+								{
+									fontSize: 50,
+									lineHeight: 100,
+								},
+							]}
 						>
-							https://accountkit.alchemy.com/react-native/using-smart-accounts/send-user-operations
+							Welcome!
 						</Text>
+						{/*<Text style={styles.userText}>{user.email}</Text>*/}
+
+						{/* User Details */}
+						<View>
+							{/*<Text style={styles.userText}>OrgId: {user.orgId}</Text>*/}
+							<Text style={styles.userText}>Address: {shortenAddress(user.address)}</Text>
+							<Text style={styles.userText}>Solana Address: {user.solanaAddress}</Text>
+							{
+								!!myBalance?.toString()
+								&& <Text
+									style={styles.userText}>Balance: {formatEther(myBalance as bigint, 'wei')} {chain.nativeCurrency.symbol}</Text>
+							}
+							<Text style={styles.userText}>Chain: {chain.name} - {chain.id} - {chain.nativeCurrency.name}</Text>
+							{/*<Text style={styles.userText}>
+								Light Account Address: {account?.address}
+							</Text>*/}
+						</View>
+
+						<View style={styles.separator}/>
+
+						{/* Documentation Info */}
+						<View style={{marginTop: "auto", marginBottom: bottom}}>
+							<Text style={[styles.userText, {marginBottom: 20}]}>
+								Now that you have a smart account setup, visit our docs
+								to learn how to use this account to send sponsored and
+								unsponsored user operatons 👇🏽
+							</Text>
+
+							<View>
+								<Text
+									onPress={() =>
+										Linking.openURL(
+											"https://accountkit.alchemy.com/react-native/using-smart-accounts/send-user-operations"
+										)
+									}
+									style={[styles.userText, styles.documentationLink]}
+								>
+									https://accountkit.alchemy.com/react-native/using-smart-accounts/send-user-operations
+								</Text>
+							</View>
+						</View>
 					</View>
-				</View>
-			</View>
-		</ScrollView>
+				</ScrollView>
+			</PageBody>
+			<BottomNavigation/>
+		</PageContainer>
 	);
 }
 
@@ -118,12 +155,11 @@ const styles = StyleSheet.create({
 	container: {
 		flexGrow: 1,
 		paddingHorizontal: 15,
-		backgroundColor: "white",
 	},
 	title: {
 		fontSize: 20,
 		fontWeight: "bold",
-		fontFamily: "SpaceMono",
+		// fontFamily: "SpaceMono",
 	},
 	separator: {
 		marginVertical: 20,
@@ -135,7 +171,7 @@ const styles = StyleSheet.create({
 	userText: {
 		marginBottom: 10,
 		fontSize: 18,
-		fontFamily: "SpaceMono",
+		fontFamily: "MuliLight",
 	},
 	documentationLink: {
 		fontSize: 16,

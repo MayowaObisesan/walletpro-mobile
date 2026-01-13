@@ -15,6 +15,7 @@
     },
     "extra": {
       "EXPO_PUBLIC_ALCHEMY_API_KEY": "ZD_ZC1-j-ke_Fhw9qfjCdo5CyZGsgVfQ",
+      "EXPO_PUBLIC_ALCHEMY_POLICY_ID": "",
       "router": {
         "origin": false
       },
@@ -46,6 +47,17 @@
           "ios": {
             "deploymentTarget": "17.0"
           }
+        }
+      ],
+      [
+        "expo-navigation-bar",
+        {
+          "backgroundColor": "#0f172a",
+          "barStyle": "light",
+          "borderColor": "#1f2937",
+          "visibility": "visible",
+          "behavior": "inset-swipe",
+          "position": "relative"
         }
       ]
     ],
