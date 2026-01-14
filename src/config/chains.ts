@@ -94,4 +94,6 @@ export const alchemyChains = [
   worldChainSepolia,
   zora,
   zoraSepolia,
-]
+];
+
+export const supportedChains = alchemyChains;

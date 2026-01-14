@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import { subscribeWithSelector } from 'zustand/middleware'
 import type { Chain } from 'viem'
-import { defaultChain } from '@src/config/chains'
+import { defaultAlchemyChain } from '@src/config/chains'
 import type { WalletAccount } from '@src/types/account'
 import { E_NetworkType, type NetworkType, type CustomNetwork } from '@src/types/network'
 
@@ -72,7 +72,7 @@ interface UIStore {
 export const useUIStore = create<UIStore>()(
   subscribeWithSelector((set, get) => ({
     // Initial state
-    selectedNetwork: defaultChain,
+    selectedNetwork: defaultAlchemyChain,
     networkStatuses: new Map(),
     networkStatus: 'checking',
     networkType: E_NetworkType.MAINNET, // Will be updated by storage sync
