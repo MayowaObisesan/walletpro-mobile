@@ -1,4 +1,5 @@
 const { hairlineWidth } = require('nativewind/theme');
+import { platformSelect } from "nativewind/theme";
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -7,6 +8,14 @@ module.exports = {
   presets: [require('nativewind/preset')],
   theme: {
     extend: {
+      fontFamily: {
+        example: ["Muli"],
+        system: platformSelect({
+          ios: "SanFrancisco",
+          android: "sans-serif",
+          default: "ui-sans-serif",
+        }),
+      },
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',

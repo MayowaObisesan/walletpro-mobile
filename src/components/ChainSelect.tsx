@@ -39,11 +39,10 @@ export function ChainSelect() {
     <Select value={{ label: chain.name, value: chain.name }}>
       <SelectTrigger className="w-[180px]" onTouchStart={onTouchStart}>
         <Text>
-          C:
           {chain.name}
         </Text>
       </SelectTrigger>
-      <SelectContent insets={contentInsets} className="w-[180px]">
+      <SelectContent insets={contentInsets} className="bg-secondary w-[180px] mt-1">
         <NativeSelectScrollView>
           <SelectGroup>
             <SelectLabel className={'uppercase'}>Mainnet</SelectLabel>

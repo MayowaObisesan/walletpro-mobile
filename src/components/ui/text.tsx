@@ -78,9 +78,10 @@ function Text({
   const Component = asChild ? Slot.Text : RNText;
   return (
     <Component
+      aria-level={variant ? ARIA_LEVEL[variant] : undefined}
       className={cn(textVariants({ variant }), textClass, className)}
       role={variant ? ROLE[variant] : undefined}
-      aria-level={variant ? ARIA_LEVEL[variant] : undefined}
+      // style={{ fontFamily: "Muli" }}
       {...props}
     />
   );

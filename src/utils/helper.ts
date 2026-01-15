@@ -1,11 +1,8 @@
 // Helper function to get current network type from selected chain's metadata
 import {useUIStore} from "@src/store/ui-store";
-import {supportedChains, chainMetadata} from "@src/config/chains";
-import type { CustomNetwork, NetworkConfig } from "@src/types/network"
-import type {Chain} from "viem";
-import { isMainnetAllowed } from "@src//utils/environment";
+import type {NetworkConfig} from "@src/types/network"
 
-export const getNetworkType = (): 'mainnet' | 'testnet' => {
+/*export const getNetworkType = (): 'mainnet' | 'testnet' => {
   const selectedNetwork = useUIStore.getState().selectedNetwork
   const metadata = chainMetadata[selectedNetwork.id]
   return metadata?.isTestnet ? "testnet" : "mainnet"
@@ -24,17 +21,17 @@ export const getChainsByNetworkType = (networkType: 'mainnet' | 'testnet') => {
     const metadata = chainMetadata[chain.id]
     return networkType === 'testnet' ? metadata?.isTestnet : !metadata?.isTestnet
   })
-}
+}*/
 
 // Helper function to get default chain for network type
-export const getDefaultChainForType = (networkType: 'mainnet' | 'testnet') => {
+/*export const getDefaultChainForType = (networkType: 'mainnet' | 'testnet') => {
   const chains = getChainsByNetworkType(networkType)
   return chains[0] // Return first chain of the type
-}
+}*/
 
 // Custom Network Helper Functions
 
-// Get all networks (predefined + custom)
+/*// Get all networks (predefined + custom)
 export const getAllNetworks = (): NetworkConfig[] => {
   const customNetworks = useUIStore.getState().customNetworks
 
@@ -53,13 +50,14 @@ export const getAllNetworks = (): NetworkConfig[] => {
   }))
 
   return customNetworkConfigs
-}
+}*/
 
 // Get only custom networks
-export const getCustomNetworks = (): CustomNetwork[] => {
+/*export const getCustomNetworks = (): CustomNetwork[] => {
   return useUIStore.getState().customNetworks
-}
+}*/
 
+/*
 // Get network by chain ID (including custom networks)
 export const getNetworkByChainId = (chainId: number): NetworkConfig | null => {
   // First check custom networks
@@ -102,11 +100,12 @@ export const getNetworkByChainId = (chainId: number): NetworkConfig | null => {
 
   return null
 }
+*/
 
 // Type guard to check if network is custom
-export const isCustomNetwork = (network: NetworkConfig): network is CustomNetwork & { isCustom: true } => {
+/*export const isCustomNetwork = (network: NetworkConfig): network is CustomNetwork & { isCustom: true } => {
   return network.isCustom === true
-}
+}*/
 
 // Get network status by chain ID
 export const getNetworkStatus = (chainId: number): 'online' | 'offline' | 'checking' | null => {
@@ -124,22 +123,11 @@ export const getNetworkStatus = (chainId: number): 'online' | 'offline' | 'check
   return networkStatuses.get(chainId)?.isOnline
     ? 'online'
     : networkStatuses.get(chainId)?.isChecking
-    ? 'checking'
-    : 'offline'
+      ? 'checking'
+      : 'offline'
 }
 
-// Get network name by chain ID
-export const getNetworkNameByChainId = (chainId: number): string => {
-  const network = getNetworkByChainId(chainId)
-  return network?.name || `Chain ${chainId}`
-}
-
-// Check if chain ID exists in any network (predefined or custom)
-export const isChainIdExists = (chainId: number): boolean => {
-  return getNetworkByChainId(chainId) !== null
-}
-
-// Determine if a chain ID is a default network or custom network
+/*// Determine if a chain ID is a default network or custom network
 export const getNetworkTypeByChainId = (chainId: number): 'default' | 'custom' | null => {
   // First check if it's a predefined chain
   const isDefault = supportedChains.some(chain => chain.id === chainId)
@@ -156,7 +144,7 @@ export const getNetworkTypeByChainId = (chainId: number): 'default' | 'custom' |
 
   // Chain ID not found in either
   return null
-}
+}*/
 
 // Get networks with their status
 export const getNetworksWithStatus = (): (NetworkConfig & { status: 'online' | 'offline' | 'checking' })[] => {
@@ -179,7 +167,7 @@ export const getNetworksWithStatus = (): (NetworkConfig & { status: 'online' | '
   }))
 
   // Get predefined networks with status
-  const predefinedNetworksWithStatus = supportedChains.map(chain => {
+  /*const predefinedNetworksWithStatus = supportedChains.map(chain => {
     const metadata = chainMetadata[chain.id]
     const status = networkStatuses.get(chain.id)
     const networkStatus: 'online' | 'offline' | 'checking' =
@@ -202,84 +190,7 @@ export const getNetworksWithStatus = (): (NetworkConfig & { status: 'online' | '
     }
   })
 
-  return [...customNetworksWithStatus, ...predefinedNetworksWithStatus]
-}
-
-// Get all networks grouped by network type (mainnet/testnet)
-export const getAllNetworksGroupedByType = (): { mainnet: NetworkConfig[], testnet: NetworkConfig[] } => {
-  const customNetworks = useUIStore.getState().customNetworks
-
-  // Get predefined networks grouped by type, respecting environment settings
-  const predefinedMainnet = isMainnetAllowed() ? getChainsByNetworkType('mainnet').map(chain => {
-    const metadata = chainMetadata[chain.id]
-    return {
-      id: `predefined_${chain.id}`,
-      name: metadata?.name || chain.name,
-      chainId: chain.id,
-      rpcUrl: chain.rpcUrls.default.http[0],
-      currency: {
-        name: chain.nativeCurrency.name,
-        symbol: chain.nativeCurrency.symbol,
-        decimals: chain.nativeCurrency.decimals
-      },
-      blockExplorerUrl: metadata?.blockExplorer,
-      isCustom: false as const
-    }
-  }) : []
-
-  const predefinedTestnet = getChainsByNetworkType('testnet').map(chain => {
-    const metadata = chainMetadata[chain.id]
-    return {
-      id: `predefined_${chain.id}`,
-      name: metadata?.name || chain.name,
-      chainId: chain.id,
-      rpcUrl: chain.rpcUrls.default.http[0],
-      currency: {
-        name: chain.nativeCurrency.name,
-        symbol: chain.nativeCurrency.symbol,
-        decimals: chain.nativeCurrency.decimals
-      },
-      blockExplorerUrl: metadata?.blockExplorer,
-      isCustom: false as const
-    }
-  })
-
-  // Import the classifier function (needs to happen here to avoid circular imports)
-  const { isTestnetChain } = require('~/config/chains')
-
-  // Classify custom networks
-  const customTestnet = customNetworks
-    .filter(network => isTestnetChain(network.name))
-    .map(network => ({
-      id: network.id,
-      name: network.name,
-      chainId: network.chainId,
-      rpcUrl: network.rpcUrl,
-      currency: network.currency,
-      blockExplorerUrl: network.blockExplorerUrl,
-      isCustom: true as const,
-      dateAdded: network.dateAdded,
-      lastUsed: network.lastUsed
-    }))
-
-  const customMainnet = isMainnetAllowed() ? customNetworks
-    .filter(network => !isTestnetChain(network.name))
-    .map(network => ({
-      id: network.id,
-      name: network.name,
-      chainId: network.chainId,
-      rpcUrl: network.rpcUrl,
-      currency: network.currency,
-      blockExplorerUrl: network.blockExplorerUrl,
-      isCustom: true as const,
-      dateAdded: network.dateAdded,
-      lastUsed: network.lastUsed
-    })) : []
-
-  return {
-    mainnet: [...predefinedMainnet, ...customMainnet].sort((a, b) => a.name.localeCompare(b.name)),
-    testnet: [...predefinedTestnet, ...customTestnet].sort((a, b) => a.name.localeCompare(b.name))
-  }
+  return [...customNetworksWithStatus, ...predefinedNetworksWithStatus]*/
 }
 
 /* Add a Helper function that converts from "Type" NetworkConfig to "Type" Chain */
@@ -294,6 +205,7 @@ function getBlockExplorerUrl(metadata: any): string | undefined {
   return undefined
 }
 
+/*
 export const networkConfigToChain = (network: NetworkConfig): Chain => {
   const blockExplorerUrl = network.blockExplorerUrl
   return {
@@ -313,3 +225,4 @@ export const networkConfigToChain = (network: NetworkConfig): Chain => {
     }
   }
 }
+*/

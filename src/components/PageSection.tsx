@@ -7,6 +7,7 @@ import {Text} from "@/src/components/ui/text";
 import {Ionicons} from "@expo/vector-icons";
 import { ThemedView } from "./ThemedView";
 import { router } from "expo-router";
+import {LucideArrowLeft} from "lucide-react-native";
 
 type childrenProps = ReactElement | ReactElement[] | any | any[] | null;
 
@@ -72,7 +73,14 @@ export const PageHeader = ({ showBackButton = false, className, children }: { sh
       {showBackButton ? (
         <View className={"flex flex-row items-center gap-x-4"}>
           <Button className={"flex flex-row items-center rounded-lg"} variant={"ghost"} size={"icon"} onPress={() => router.back()}>
-            <Text className={"flex flex-row items-center text-foreground"}><Ionicons name={"arrow-back"} size={32} color={"inherit"} className={"text-foreground leading-tight"} /></Text>
+            <Text className={"flex flex-row items-center text-foreground"}>
+              {/*<Ionicons name={"arrow-back"} size={32} color={"inherit"} className={"text-foreground leading-tight"} />*/}
+              <LucideArrowLeft
+                className={"text-foreground leading-tight"}
+                size={32}
+                strokeWidth={4}
+              />
+            </Text>
           </Button>
           {children}
         </View>

@@ -98,6 +98,21 @@ export default function MainLayout() {
 					headerShown: false,
 				}}
 			/>
+			{/*<Stack.Screen
+				name="accounts"
+			/>
+			<Stack.Screen
+				name="send"
+			/>
+			<Stack.Screen
+				name="history"
+			/>
+			<Stack.Screen
+				name="settings"
+			/>
+			<Stack.Screen
+				name="about"
+			/>*/}
 		</Stack>
 	);
 }

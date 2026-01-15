@@ -148,6 +148,15 @@ export const ellipsisOverflowedText = (
   return `${cut}...`;
 };
 
+export const formatUsdValue = (value: number | null): string => {
+  if (value === null || value === 0) return "$0.00";
+  if (value < 0.01) return "<$0.01";
+  return `$${value.toLocaleString('en-US', { 
+    minimumFractionDigits: 2, 
+    maximumFractionDigits: 2 
+  })}`;
+};
+
 /**
  * @description compare address is same, ignore case
  */

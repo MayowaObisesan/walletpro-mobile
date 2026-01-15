@@ -18,6 +18,7 @@ import {PortalHost} from "@rn-primitives/portal";
 import {useColorScheme} from "@src/hooks/useColorScheme";
 import {DARK_THEME, LIGHT_THEME} from "@/src/lib/theme";
 import {ThemeProvider} from "@react-navigation/native";
+import {Toaster} from "sonner-native";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -93,6 +94,27 @@ function RootLayoutNav() {
 								}}
 							/>
 						</Stack>
+
+						<Toaster
+							position="top-center"
+							offset={120}
+							duration={4000}
+							swipeToDismissDirection="left"
+							visibleToasts={3}
+							closeButton
+							autoWiggleOnUpdate="toast-change"
+							theme="system"
+							// icons={{
+							//   error: <Text>💥</Text>,
+							//   loading: <Text>🔄</Text>,
+							// }}
+							toastOptions={{
+								actionButtonStyle: {
+									paddingHorizontal: 20,
+								},
+							}}
+							pauseWhenPageIsHidden
+						/>
 					</SafeAreaView>
 				</SafeAreaProvider>
 				<PortalHost />
