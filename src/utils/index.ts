@@ -28,6 +28,8 @@ export function toDecimalPlace(value: number, places: number) {
 
 export const fetchEthPrice = async () => {
   try {
+    // For now, keep the existing CoinGecko implementation
+    // We'll integrate MCP in a separate utility that can be called from components
     const response = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd");
     const data = await response.json();
     return (data as unknown as any).ethereum.usd;
