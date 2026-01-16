@@ -33,7 +33,7 @@ export default function TabOneScreen() {
 
 	const account = client?.account;
 
-	console.log("[Home Screen] account", account);
+	console.log("[Home Screen] account", client?.checkGasSponsorshipEligibility);
 
 	if (!user) return null;
 
@@ -77,15 +77,6 @@ export default function TabOneScreen() {
 								</Text>
 							)}
 						</Pressable>
-						<Avatar
-							alt="Zach Nugent's Avatar"
-							className={'size-12'}
-						>
-							<AvatarImage source={{ uri: '' }} />
-							<AvatarFallback>
-								<Text>BM</Text>
-							</AvatarFallback>
-						</Avatar>
 						<ProfileDropDown />
 					</View>
 				</View>

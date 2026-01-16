@@ -15,6 +15,7 @@ import {router} from "expo-router";
 import {useUIStore} from "@src/store/ui-store";
 import {WalletAccount} from "@src/types/account";
 import {client} from "@src/utils/client";
+import {Icon} from "@src/components/ui/icon";
 
 export default function SendScreen() {
   const user = useUser()
@@ -33,13 +34,13 @@ export default function SendScreen() {
   const handleContinueWithAddress = () => {
     if (!fromAccount || !recipientAddress.trim()) return
 
-    router.push(`/send/details?fromAccount=${fromAccount}&recipientAddres=${recipientAddress.trim()}`)
+    router.push(`/send/details?fromAccount=${fromAccount.address}&toAccount=${recipientAddress.trim()}`)
   }
 
   const handleContinueWithAccount = (toAccount: WalletAccount) => {
     if (!fromAccount) return
 
-    router.push(`/send/details?fromAccount=${fromAccount}&toAccount=${toAccount}`)
+    router.push(`/send/details?fromAccount=${fromAccount.address}&toAccount=${toAccount.address}`)
     // router.push(`/contact-details/${contact.id}?threadId=${thread.id}&tab=chat`);
   }
 
@@ -124,14 +125,14 @@ export default function SendScreen() {
               {canProceedWithAddress && (
                 <Button
                   onPress={handleContinueWithAddress}
-                  className="mx-auto mt-6"
+                  className="mx-auto mt-12"
                   size="default"
                   variant={'secondary'}
                 >
                   <Text className={'text-lg leading-tight'}>
                     Continue with Address
                   </Text>
-                  <ArrowRight className="w-4 h-4" />
+                  <Icon as={ArrowRight} className="w-5 h-5" strokeWidth={2} />
                 </Button>
               )}
             </View>

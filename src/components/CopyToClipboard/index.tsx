@@ -1,5 +1,16 @@
 import { type ReactNode, useState } from 'react';
+import { View, TouchableOpacity } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
 import { toast } from 'sonner-native';
+
+interface CopyTextComponentProps {
+  textToCopy: string;
+  feedbackMessage?: string;
+  clearClipboard?: boolean;
+  icon?: ReactNode;
+  successIcon?: ReactNode;
+  children?: ReactNode;
+}
 
 const CopyTextComponent = ({
   textToCopy,
@@ -8,35 +19,40 @@ const CopyTextComponent = ({
   icon,
   successIcon,
   children,
-}: {
-  textToCopy: string;
-  feedbackMessage?: string;
-  clearClipboard?: boolean;
-  icon?: ReactNode,
-  successIcon?: ReactNode,
-  children?: ReactNode;
-}) => {
+}: CopyTextComponentProps) => {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    setCopied(true);
-    toast(feedbackMessage || 'Address copied to clipboard', { duration: 1000 });
-    setTimeout(() => setCopied(false), 2400)
-    // TODO: Implement clearing clipboard functionality
+  const handleCopy = async () => {
+    try {
+      await Clipboard.setStringAsync(textToCopy);
+      setCopied(true);
+      toast(feedbackMessage || 'Address copied to clipboard', { duration: 1000 });
+      
+      // Reset copied state after duration
+      setTimeout(() => setCopied(false), 2400);
+      
+      // TODO: Implement clearing clipboard functionality if needed
+      if (clearClipboard) {
+        setTimeout(() => {
+          Clipboard.setStringAsync('');
+        }, 5000);
+      }
+    } catch (error) {
+      console.error('Failed to copy text to clipboard:', error);
+      toast('Failed to copy to clipboard', { duration: 2000 });
+    }
   };
 
   return (
-    <div>
-      <CopyToClipboard text={textToCopy} onCopy={handleCopy}>
+    <View>
+      <TouchableOpacity onPress={handleCopy} disabled={copied}>
         {icon ? (
-          <div className="flex items-center gap-2">
+          <View className="flex flex-row items-center gap-2">
             {copied ? successIcon : icon}
-          </div>
+          </View>
         ) : children}
-      </CopyToClipboard>
-
-      {/* {copied && <p style={{ color: "green" }}>Text copied to clipboard!</p>} */}
-    </div>
+      </TouchableOpacity>
+    </View>
   );
 };
 

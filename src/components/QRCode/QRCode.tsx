@@ -14,7 +14,6 @@ import {Button} from "@src/components/ui/button";
 import {Ionicons} from "@expo/vector-icons";
 
 export default function QRCodeDialog() {
-  const { activeAccount, selectedNetwork } = useUIStore()
   const user = useUser();
   const {chain} = useChain();
 

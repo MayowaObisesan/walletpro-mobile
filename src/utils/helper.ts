@@ -1,228 +1,89 @@
-// Helper function to get current network type from selected chain's metadata
-import {useUIStore} from "@src/store/ui-store";
-import type {NetworkConfig} from "@src/types/network"
 
-/*export const getNetworkType = (): 'mainnet' | 'testnet' => {
-  const selectedNetwork = useUIStore.getState().selectedNetwork
-  const metadata = chainMetadata[selectedNetwork.id]
-  return metadata?.isTestnet ? "testnet" : "mainnet"
-}
+// Format address for display (shorten to first 6 and last 4 characters)
+export const formatAddress = (address: string): string => {
+  if (!address || address.length < 10) return address;
+  return `${address.slice(0, 6)}...${address.slice(-4)}`;
+};
 
-// Helper function to get blockchain name
-export const getBlockchainName = (): string => {
-  const selectedNetwork = useUIStore.getState().selectedNetwork
-  const metadata = chainMetadata[selectedNetwork.id]
-  return metadata?.shortName || "Unknown"
-}
+// Format transaction hash for display
+export const formatTxHash = (hash: string): string => {
+  if (!hash || hash.length < 10) return hash;
+  return `${hash.slice(0, 6)}...${hash.slice(-4)}`;
+};
 
-// Helper function to filter chains by network type
-export const getChainsByNetworkType = (networkType: 'mainnet' | 'testnet') => {
-  return supportedChains.filter(chain => {
-    const metadata = chainMetadata[chain.id]
-    return networkType === 'testnet' ? metadata?.isTestnet : !metadata?.isTestnet
-  })
-}*/
+// Format value with appropriate decimal places
+export const formatValue = (value: number | string, decimals: number = 4): string => {
+  const num = typeof value === 'string' ? parseFloat(value) : value;
+  if (isNaN(num)) return '0';
 
-// Helper function to get default chain for network type
-/*export const getDefaultChainForType = (networkType: 'mainnet' | 'testnet') => {
-  const chains = getChainsByNetworkType(networkType)
-  return chains[0] // Return first chain of the type
-}*/
+  if (num === 0) return '0';
+  if (num < 0.001) return '< 0.001';
+  if (num < 1) return num.toFixed(6);
+  return num.toFixed(decimals);
+};
 
-// Custom Network Helper Functions
+// Format currency value with symbol
+export const formatCurrency = (value: number | string, symbol: string = ''): string => {
+  const formatted = formatValue(value);
+  return symbol ? `${formatted} ${symbol}` : formatted;
+};
 
-/*// Get all networks (predefined + custom)
-export const getAllNetworks = (): NetworkConfig[] => {
-  const customNetworks = useUIStore.getState().customNetworks
+// Get time ago string from timestamp
+export const getTimeAgo = (timestamp: number): string => {
+  const now = Date.now();
+  const diff = now - timestamp;
 
-  // Convert custom networks to NetworkConfig format
-  const customNetworkConfigs: NetworkConfig[] = customNetworks.map(network => ({
-    id: network.id,
-    name: network.name,
-    chainId: network.chainId,
-    rpcUrl: network.rpcUrl,
-    currency: network.currency,
-    blockExplorerUrl: network.blockExplorerUrl,
-    isCustom: true,
-    dateAdded: network.dateAdded,
-    lastUsed: network.lastUsed,
-    status: network.status
-  }))
+  const seconds = Math.floor(diff / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
 
-  return customNetworkConfigs
-}*/
+  if (days > 0) return `${days} day${days > 1 ? 's' : ''} ago`;
+  if (hours > 0) return `${hours} hour${hours > 1 ? 's' : ''} ago`;
+  if (minutes > 0) return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+  return 'Just now';
+};
 
-// Get only custom networks
-/*export const getCustomNetworks = (): CustomNetwork[] => {
-  return useUIStore.getState().customNetworks
-}*/
+// Convert hex block number to decimal and format
+export const formatBlockNumber = (blockHex: string): string => {
+  const blockNum = parseInt(blockHex, 16);
+  return blockNum.toLocaleString();
+};
 
-/*
-// Get network by chain ID (including custom networks)
-export const getNetworkByChainId = (chainId: number): NetworkConfig | null => {
-  // First check custom networks
-  const customNetworks = useUIStore.getState().customNetworks
-  const customNetwork = customNetworks.find(n => n.chainId === chainId)
+// Get block explorer URL for transaction
+export const getBlockExplorerTxUrl = (txHash: string, chainId: number): string => {
+  const explorers: Record<number, string> = {
+    1: 'https://etherscan.io/tx',
+    11155111: 'https://sepolia.etherscan.io/tx',
+    137: 'https://polygonscan.com/tx',
+    10: 'https://optimistic.etherscan.io/tx',
+    42161: 'https://arbiscan.io/tx',
+    8453: 'https://basescan.org/tx',
+  };
 
-  if (customNetwork) {
-    return {
-      id: customNetwork.id,
-      name: customNetwork.name,
-      chainId: customNetwork.chainId,
-      rpcUrl: customNetwork.rpcUrl,
-      currency: customNetwork.currency,
-      blockExplorerUrl: customNetwork.blockExplorerUrl,
-      isCustom: true,
-      dateAdded: customNetwork.dateAdded,
-      lastUsed: customNetwork.lastUsed,
-      status: customNetwork.status
-    }
+  const baseUrl = explorers[chainId];
+  if (!baseUrl) {
+    return `https://etherscan.io/tx/${txHash}`; // Default to Ethereum
   }
 
-  // Then check predefined chains
-  const predefinedChain = supportedChains.find(chain => chain.id === chainId)
-  if (predefinedChain) {
-    const metadata = chainMetadata[chainId]
-    return {
-      id: `predefined_${chainId}`,
-      name: metadata?.name || predefinedChain.name,
-      chainId: predefinedChain.id,
-      rpcUrl: predefinedChain.rpcUrls.default.http[0],
-      currency: {
-        name: predefinedChain.nativeCurrency.name,
-        symbol: predefinedChain.nativeCurrency.symbol,
-        decimals: predefinedChain.nativeCurrency.decimals
-      },
-      blockExplorerUrl: metadata?.blockExplorer,
-      isCustom: false
-    }
+  return `${baseUrl}/${txHash}`;
+};
+
+// Get block explorer URL for address
+export const getBlockExplorerAddressUrl = (address: string, chainId: number): string => {
+  const explorers: Record<number, string> = {
+    1: 'https://etherscan.io/address',
+    11155111: 'https://sepolia.etherscan.io/address',
+    137: 'https://polygonscan.com/address',
+    10: 'https://optimistic.etherscan.io/address',
+    42161: 'https://arbiscan.io/address',
+    8453: 'https://basescan.org/address',
+  };
+
+  const baseUrl = explorers[chainId];
+  if (!baseUrl) {
+    return `https://etherscan.io/address/${address}`; // Default to Ethereum
   }
 
-  return null
-}
-*/
-
-// Type guard to check if network is custom
-/*export const isCustomNetwork = (network: NetworkConfig): network is CustomNetwork & { isCustom: true } => {
-  return network.isCustom === true
-}*/
-
-// Get network status by chain ID
-export const getNetworkStatus = (chainId: number): 'online' | 'offline' | 'checking' | null => {
-  const networkStatuses = useUIStore.getState().networkStatuses
-  const customNetworks = useUIStore.getState().customNetworks
-  const customNetworkStatuses = useUIStore.getState().customNetworkStatuses
-
-  // Check if it's a custom network
-  const customNetwork = customNetworks.find(n => n.chainId === chainId)
-  if (customNetwork) {
-    return customNetworkStatuses.get(customNetwork.id) || customNetwork.status
-  }
-
-  // Check predefined network status
-  return networkStatuses.get(chainId)?.isOnline
-    ? 'online'
-    : networkStatuses.get(chainId)?.isChecking
-      ? 'checking'
-      : 'offline'
-}
-
-/*// Determine if a chain ID is a default network or custom network
-export const getNetworkTypeByChainId = (chainId: number): 'default' | 'custom' | null => {
-  // First check if it's a predefined chain
-  const isDefault = supportedChains.some(chain => chain.id === chainId)
-  if (isDefault) {
-    return 'default'
-  }
-
-  // Then check if it's a custom network
-  const customNetworks = useUIStore.getState().customNetworks
-  const isCustom = customNetworks.some(network => network.chainId === chainId)
-  if (isCustom) {
-    return 'custom'
-  }
-
-  // Chain ID not found in either
-  return null
-}*/
-
-// Get networks with their status
-export const getNetworksWithStatus = (): (NetworkConfig & { status: 'online' | 'offline' | 'checking' })[] => {
-  const customNetworks = useUIStore.getState().customNetworks
-  const networkStatuses = useUIStore.getState().networkStatuses
-  const customNetworkStatuses = useUIStore.getState().customNetworkStatuses
-
-  // Get custom networks with status
-  const customNetworksWithStatus = customNetworks.map(network => ({
-    id: network.id,
-    name: network.name,
-    chainId: network.chainId,
-    rpcUrl: network.rpcUrl,
-    currency: network.currency,
-    blockExplorerUrl: network.blockExplorerUrl,
-    isCustom: true as const,
-    dateAdded: network.dateAdded,
-    lastUsed: network.lastUsed,
-    status: customNetworkStatuses.get(network.id) || network.status
-  }))
-
-  // Get predefined networks with status
-  /*const predefinedNetworksWithStatus = supportedChains.map(chain => {
-    const metadata = chainMetadata[chain.id]
-    const status = networkStatuses.get(chain.id)
-    const networkStatus: 'online' | 'offline' | 'checking' =
-      status?.isOnline ? 'online' :
-      status?.isChecking ? 'checking' : 'offline'
-
-    return {
-      id: `predefined_${chain.id}`,
-      name: metadata?.name || chain.name,
-      chainId: chain.id,
-      rpcUrl: chain.rpcUrls.default.http[0],
-      currency: {
-        name: chain.nativeCurrency.name,
-        symbol: chain.nativeCurrency.symbol,
-        decimals: chain.nativeCurrency.decimals
-      },
-      blockExplorerUrl: metadata?.blockExplorer,
-      isCustom: false as const,
-      status: networkStatus
-    }
-  })
-
-  return [...customNetworksWithStatus, ...predefinedNetworksWithStatus]*/
-}
-
-/* Add a Helper function that converts from "Type" NetworkConfig to "Type" Chain */
-function getBlockExplorerUrl(metadata: any): string | undefined {
-  if (!metadata) return undefined
-  const m = metadata as any
-  if (typeof m.blockExplorer === 'string') return m.blockExplorer
-  if (typeof m.blockExplorer?.url === 'string') return m.blockExplorer.url
-  if (Array.isArray(m.blockExplorers) && typeof m.blockExplorers[0]?.url === 'string') return m.blockExplorers[0].url
-  if (m.blockExplorers?.default?.url) return m.blockExplorers.default.url
-  if (typeof m.blockExplorerUrl === 'string') return m.blockExplorerUrl
-  return undefined
-}
-
-/*
-export const networkConfigToChain = (network: NetworkConfig): Chain => {
-  const blockExplorerUrl = network.blockExplorerUrl
-  return {
-    id: network.chainId,
-    name: network.name,
-    // network.name.toLowerCase().replace(/\s+/g, '-')
-    nativeCurrency: network.currency,
-    rpcUrls: {
-      default: { http: [network.rpcUrl] }
-    },
-    blockExplorers: {
-      default: {
-        apiUrl: "",
-        name: network.name.toLowerCase().replace(/\s+/g, '-'),
-        url: blockExplorerUrl,
-      }
-    }
-  }
-}
-*/
+  return `${baseUrl}/${address}`;
+};

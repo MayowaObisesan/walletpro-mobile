@@ -56,6 +56,50 @@ export interface TransactionHistory {
   totalCount: number
 }
 
+// Alchemy transfer types
+export interface AlchemyTransfer {
+  blockNum: string
+  uniqueId: string
+  hash: string
+  from: string
+  to: string
+  value: number
+  erc721TokenId: string | null
+  erc1155Metadata: any | null
+  tokenId: string | null
+  asset: string
+  category: 'external' | 'internal' | 'erc20' | 'erc721' | 'erc1155'
+  rawContract: {
+    value: string
+    address: string | null
+    decimal: string
+  }
+}
+
+export interface AlchemyTransfersResponse {
+  jsonrpc: string
+  id: string
+  result: {
+    transfers: AlchemyTransfer[]
+    pageKey: string
+  }
+}
+
+export interface UseTransactionHistoryParams {
+  address?: Address
+  categories?: TransactionCategory[]
+  searchQuery?: string
+  fromBlock?: string
+  pageKey?: string
+}
+
+export type TransactionCategory = 'external' | 'internal' | 'erc20' | 'erc721' | 'erc1155'
+
+export interface I_TransactionFilters {
+  categories: TransactionCategory[]
+  searchQuery: string
+}
+
 export interface GasEstimate {
   gasLimit: string
   gasPrice: string

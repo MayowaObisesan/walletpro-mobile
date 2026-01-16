@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable, Dimensions } from "react-native";
+import { StyleSheet, View, Pressable, Dimensions } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { useLogout } from "@account-kit/react-native";
@@ -7,6 +7,7 @@ import {
 	MenuItemType,
 	MenuItepProps,
 } from "@src/types/menu.types";
+import {Text} from "@src/components/ui/text";
 
 const windowHeight = Dimensions.get("window").height;
 
@@ -88,7 +89,7 @@ const MenuItem = ({
 
 const styles = StyleSheet.create({
 	menuContainer: {
-		backgroundColor: "white",
+		// backgroundColor: "white",
 		flex: 1,
 		height: windowHeight,
 		paddingHorizontal: 20,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
 	},
 
 	titleText: {
-		fontFamily: "SpaceMono",
+		// fontFamily: "SpaceMono",
 		fontSize: 25,
 	},
 	menuItemWrapper: {
