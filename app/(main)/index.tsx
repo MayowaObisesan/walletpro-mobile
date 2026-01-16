@@ -1,4 +1,4 @@
-import {useUser, useSmartAccountClient, useChain} from "@account-kit/react-native";
+import {useUser, useSmartAccountClient, useChain, useAccount, useExportAccount} from "@account-kit/react-native";
 import {StyleSheet, View, Linking, ScrollView, ActivityIndicator, Pressable} from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import {shortenAddress, formatUsdValue} from "@src/utils";
@@ -32,6 +32,8 @@ export default function TabOneScreen() {
 	const { balance: myBalance, usdValue, isLoading, error, refetch } = useAccountBalanceWithUsd();
 
 	const account = client?.account;
+
+	console.log("[Home Screen] account", account);
 
 	if (!user) return null;
 

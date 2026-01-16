@@ -6,7 +6,7 @@ import {ArrowRight, Info, Terminal} from "lucide-react-native";
 import {Button} from "@src/components/ui/button";
 import {Text} from "@src/components/ui/text";
 import {Ionicons} from "@expo/vector-icons";
-import {useChain} from "@account-kit/react-native";
+import {useChain, useUser} from "@account-kit/react-native";
 import {Select, SelectContent, SelectItem, SelectTrigger} from "@src/components/ui/select";
 import { shortenAddress } from "@/src/utils";
 import {Input} from "@src/components/ui/input";
@@ -14,15 +14,18 @@ import { AccountBalance } from "../accounts";
 import {router} from "expo-router";
 import {useUIStore} from "@src/store/ui-store";
 import {WalletAccount} from "@src/types/account";
+import {client} from "@src/utils/client";
 
 export default function SendScreen() {
+  const user = useUser()
   const {chain} = useChain();
   const [fromAccountId, setFromAccountId] = useState<string>("")
   const [recipientAddress, setRecipientAddress] = useState<string>("")
+  const account = user;
 
   // Filter out the from account from available accounts for selection
-  const availableToAccounts = accounts.filter(acc => acc.id !== fromAccountId)
-  const fromAccount = accounts.find(acc => acc.id === fromAccountId)
+  const availableToAccounts = [account].filter(acc => acc?.address !== fromAccountId)
+  const fromAccount = [account].find(acc => acc?.address === fromAccountId)
 
   const canProceedWithAddress = fromAccountId && recipientAddress.trim() && recipientAddress.startsWith('0x') && recipientAddress.length === 42
   const canProceed = fromAccountId && (canProceedWithAddress || availableToAccounts.length > 0)
@@ -37,6 +40,7 @@ export default function SendScreen() {
     if (!fromAccount) return
 
     router.push(`/send/details?fromAccount=${fromAccount}&toAccount=${toAccount}`)
+    // router.push(`/contact-details/${contact.id}?threadId=${thread.id}&tab=chat`);
   }
 
   return (
@@ -51,43 +55,53 @@ export default function SendScreen() {
               <AlertTitle className={'flex-1 bg-transparent text-lg text-[#3DD68C]'}>You are on {chain?.name} {chain?.testnet ? "testnet" : "mainnet"}</AlertTitle>
             </View>
           </Alert>
-          <View>
+          <View className={'gap-8'}>
             {/* From Account */}
-            <View className={'relative'}>
-              <Text className={'font-bold'}>From</Text>
-              <Select value={{ label: fromAccountId, value: fromAccountId}} onValueChange={setFromAccountId}>
-                <SelectTrigger className="h-14 w-full">
+            <View className={'relative gap-1'}>
+              <Text className={'font-bold px-2'}>From</Text>
+              <Select value={{ label: fromAccountId, value: account?.address!}}>
+                <SelectTrigger className="h-20 w-full rounded-2xl px-5 dark:bg-secondary">
                   {/*<SelectValue placeholder="Select account to send from" />*/}
+                  <View className={''}>
+                    <Text className={'font-medium text-muted-foreground'}>Account 1</Text>
+                    <Text className={'font-medium text-lg'}>{shortenAddress(account?.address!)}</Text>
+                  </View>
                 </SelectTrigger>
-                <SelectContent position={'popper'}>
-                  {accounts.map((account) => (
-                    <SelectItem key={account.id} label={account.name} value={account.id} className="h-14 w-full" onPress={() => setFromAccountId(account.address)}>
-                      <View className="items-center justify-between">
-                        <View>
-                          <Text className={'font-medium text-muted-foreground'}>{account.name}</Text>
-                          <Text className={'text-base'}>{shortenAddress(account.address)}</Text>
-                        </View>
+                <SelectContent className={'bg-card mt-1'} position={'item-aligned'}>
+                  {[account].map((eachAccount) => (
+                    <SelectItem
+                      className="h-20 w-full"
+                      key={eachAccount?.address}
+                      label={eachAccount?.address!}
+                      value={eachAccount?.address!}
+                      onPress={() => setFromAccountId(account?.address!)}
+                    >
+                      <View className={''}>
+                        <Text className={'font-medium text-muted-foreground'}>Account 1</Text>
+                        <Text className={'font-medium text-lg'}>{shortenAddress(account?.address!)}</Text>
                       </View>
+                      {/*<View className="h-20 flex-1 items-center justify-between">*/}
+                      {/*</View>*/}
                     </SelectItem>
                   ))}
                 </SelectContent>
               </Select>
 
               {fromAccount && (
-                <div className="absolute top-0 right-0 px-3 rounded-lg">
-                  <div className="flex justify-between items-center">
+                <View className="absolute top-0 right-0 px-3 rounded-lg">
+                  <View className="flex justify-between items-center">
                     {/*<span className="text-sm font-medium">Balance:</span>*/}
                     <Text className={'font-bold text-green-600'}>
                       <AccountBalance address={fromAccount.address} />
                     </Text>
-                  </div>
-                </div>
+                  </View>
+                </View>
               )}
             </View>
 
             {/* Manual Address Input */}
-            <View className={'w-full mx-auto'}>
-              <Text className={'font-bold'}>To</Text>
+            <View className={'w-full mx-auto gap-1'}>
+              <Text className={'font-bold px-2'}>To</Text>
               {/*<TextField.Root
                 variant={"soft"}
                 size={"3"}
@@ -97,15 +111,15 @@ export default function SendScreen() {
                 style={{ width: "100%" }}
               />*/}
               <Input
-                  id="recipient"
-                  placeholder="Recipient Address or ENS..."
-                  value={recipientAddress}
-                  onChange={(e) => setRecipientAddress(e.target.value)}
-                  className="w-full"
-                />
-              <Text className="mt-1 text-muted-foreground">
-                  Enter an external Ethereum address to send to.
-                </Text>
+                id="recipient"
+                placeholder="Recipient Address or ENS..."
+                value={recipientAddress}
+                onChangeText={(value) => setRecipientAddress(value)}
+                className="h-16 w-full px-5 rounded-2xl text-xl leading-tight"
+              />
+              <Text className="px-2 text-muted-foreground/60">
+                Paste an Ethereum address to send to.
+              </Text>
 
               {canProceedWithAddress && (
                 <Button
@@ -114,8 +128,10 @@ export default function SendScreen() {
                   size="default"
                   variant={'secondary'}
                 >
-                  Continue with Address
-                  <ArrowRight className="w-4 h-4 ml-2" />
+                  <Text className={'text-lg leading-tight'}>
+                    Continue with Address
+                  </Text>
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
               )}
             </View>
@@ -133,19 +149,6 @@ export default function SendScreen() {
           </View>
         </View>
       </PageBody>
-      <View className={'flex flex-row items-center gap-x-4 p-4'}>
-        <Button className={'flex-1'}>
-          <Text className={'font-medium'}>Add New Address</Text>
-        </Button>
-        <Button className={'bg-secondary'} variant={'secondary'}>
-          <Text>
-            <Ionicons name={'download'} size={16} />
-          </Text>
-          <Text>
-            Import Wallet
-          </Text>
-        </Button>
-      </View>
     </PageContainer>
   )
 }

@@ -9,23 +9,23 @@ importers:
   .:
     dependencies:
       '@account-kit/infra':
-        specifier: ^4.52.2
-        version: 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+        specifier: ^4.82.1
+        version: 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@account-kit/logging':
         specifier: ^4.82.1
         version: 4.82.1
       '@account-kit/react-native':
-        specifier: ^4.52.2
-        version: 4.82.0(bb7d05242f4ade2aff78b9dd571134cf)
+        specifier: ^4.82.1
+        version: 4.82.1(bb7d05242f4ade2aff78b9dd571134cf)
       '@account-kit/react-native-signer':
-        specifier: ^4.52.2
-        version: 4.82.0(6106e6a366c4b2047a7b738435c0d4dc)
+        specifier: ^4.82.1
+        version: 4.82.1(6106e6a366c4b2047a7b738435c0d4dc)
       '@account-kit/signer':
         specifier: ^4.82.0
         version: 4.82.0(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@account-kit/smart-contracts':
-        specifier: ^4.52.2
-        version: 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+        specifier: ^4.82.1
+        version: 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@babel/runtime':
         specifier: ^7.28.4
         version: 7.28.4
@@ -235,22 +235,27 @@ packages:
     peerDependencies:
       viem: ^2.29.2
 
-  '@account-kit/core@4.82.0':
-    resolution: {integrity: sha512-F/A5RHcGZr6hPIff5hl2KQwJfBMTug3kVSWfqcDcfKf0iDZRN6SgzAgW02mqtmqbuKgNGYabpmHMmbWrt3QwWw==}
+  '@aa-sdk/core@4.82.1':
+    resolution: {integrity: sha512-5ue+fw5wmoaex06GtksA6oXFKNtLsXm/DK8nDasPs/pE2c4Fd7JI1Sj85tZdXf1v0F+FFyeM7CB4l0xB5V7nFA==}
+    peerDependencies:
+      viem: ^2.29.2
+
+  '@account-kit/core@4.82.1':
+    resolution: {integrity: sha512-nGSvdBa3uYwZfLU1vQQkEWxNWEE+T97XeL4pUoZ9F8AT+XKoEutdFyYP2YydqP/7xqmerhbtbyeEFv3NOKsdlQ==}
     peerDependencies:
       viem: ^2.29.2
       wagmi: ^2.12.7
 
-  '@account-kit/infra@4.82.0':
-    resolution: {integrity: sha512-GGmYCiHilvbqCU1X4IVZ/ZyTkUeWVi7nWaP8aGB7sHgS17X0U1gRbdyjUxL1MtAv4DGW5S9RjEY9HKJuVfND3w==}
+  '@account-kit/infra@4.82.1':
+    resolution: {integrity: sha512-yE62bmdj/cDhgaarg5SdypUtOh4grOwgdwbwm4dSLOhvcLGMRr75THR/BPASwR9cQM6KZtLMQ2FAv56saQlZOA==}
     peerDependencies:
       viem: ^2.29.2
 
   '@account-kit/logging@4.82.1':
     resolution: {integrity: sha512-u55cAShxdK5FVDZ2jKMP1S6T0ZgA0WG0kA/MQxMH45IenEIpInvQvBbMQgJTkbjtZi5u5HljEL+00K24u57ygQ==}
 
-  '@account-kit/react-native-signer@4.82.0':
-    resolution: {integrity: sha512-IQXJmCTapQGRjRlYmeSlHEdd64irXjeBTUjLDFlvO8+BSLzSTzVAC9GDizwcvMhjAxqHpbwRndge1f9sFhjYkw==}
+  '@account-kit/react-native-signer@4.82.1':
+    resolution: {integrity: sha512-SxX7KFpQ3c57nJHnHXLw+nlbge5/koWfKQfKKUN4/5bJ6ZoVC4Jm9cl+oBOMpGq3A7oIBlD6iva2fb8uPScgWA==}
     peerDependencies:
       react: '>=18.2.0'
       react-native: '>=0.76.0'
@@ -259,11 +264,11 @@ packages:
       react-native-mmkv: ^3.1.0
       react-native-passkey: ^3.1.0
 
-  '@account-kit/react-native@4.82.0':
-    resolution: {integrity: sha512-iqQs/AJAqonXscsN2NteffYVcANYkKqNQUONn3km+tS/EVT1AuBxo7BHhXsg7a5We5Rj9AJFgBqghU8Gq7juyA==}
+  '@account-kit/react-native@4.82.1':
+    resolution: {integrity: sha512-MubFV6A/nwr/K3eCuz9ae00n+lQbAcdeX/vgzbSEd2QNlHfOe8iUzziBqILViDZy9E8QuVmRMecebl+EQHbSGQ==}
 
-  '@account-kit/react@4.82.0':
-    resolution: {integrity: sha512-Xvxq6j0k/Az2/lSTS68e4HSjL/cti3uMxIvmi2XtmEZJYVTsFy9IW6CQYDUsqbLCncTxsWdGiiCIcxZnloGXHQ==}
+  '@account-kit/react@4.82.1':
+    resolution: {integrity: sha512-GXC4HUAS83DDBfOApVKPz+ibQzDHo69ymUdTcOG48HOsZMqWONc/dcuy/2F5d3Spl7VAuieT1TQzMNrFfRgrBQ==}
     peerDependencies:
       '@tanstack/react-query': ^5.28.9
       react: '>=18.2.0'
@@ -276,13 +281,18 @@ packages:
     peerDependencies:
       viem: ^2.29.2
 
-  '@account-kit/smart-contracts@4.82.0':
-    resolution: {integrity: sha512-tkCNOO+iKyZK/j1tcws/tdeGpu609AlVMLqJ4RzxIqKpsKovYkMaKU588UF5PpyXnzHLS5EZFFEgaLbzmKt+mQ==}
+  '@account-kit/signer@4.82.1':
+    resolution: {integrity: sha512-sUdddnuw5uifBXCLGhgn3avI15Uvi4WYecZhNXxgtrEbCmEEl4k7nRr+KU056WGAugNINiLxXNtYUNpxvwUvfQ==}
     peerDependencies:
       viem: ^2.29.2
 
-  '@account-kit/wallet-client@4.82.0':
-    resolution: {integrity: sha512-qG8xfBIIA5itqNkMLV3e+FMAltPkqM+T+g3ojxMo9QgtcAN3uUYKh7VIH6iJDMeQznuqb0sC7hCuMSUQIwpqTg==}
+  '@account-kit/smart-contracts@4.82.1':
+    resolution: {integrity: sha512-i2HSlbBoChME2Eu+Wd4b9a0IaeYNZnRGA1HzV2z4z5Um+PNVGcsb91CmO4SBnWbuaMNs9RhjtSWc+bTJbBYE/Q==}
+    peerDependencies:
+      viem: ^2.29.2
+
+  '@account-kit/wallet-client@4.82.1':
+    resolution: {integrity: sha512-FjB9lFQUbCnX418djd5r1ryijviWywZ/07W+tvY18Bxb1JCCqtUJ4W1r0SPtZSSnk8/HZxR9+EYxVFLgtKh6FA==}
     peerDependencies:
       viem: ^2.29.2
 
@@ -9362,14 +9372,23 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@account-kit/core@4.82.0(595b17d3945e8f6dae50dc332d63d777)':
+  '@aa-sdk/core@4.82.1(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))':
     dependencies:
-      '@account-kit/infra': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      abitype: 0.8.11(typescript@5.3.3)(zod@3.25.76)
+      eventemitter3: 5.0.1
+      viem: 2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5)
+      zod: 3.25.76
+    transitivePeerDependencies:
+      - typescript
+
+  '@account-kit/core@4.82.1(595b17d3945e8f6dae50dc332d63d777)':
+    dependencies:
+      '@account-kit/infra': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@account-kit/logging': 4.82.1
-      '@account-kit/react-native-signer': 4.82.0(6106e6a366c4b2047a7b738435c0d4dc)
-      '@account-kit/signer': 4.82.0(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/smart-contracts': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/wallet-client': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))(zod@3.25.76)
+      '@account-kit/react-native-signer': 4.82.1(6106e6a366c4b2047a7b738435c0d4dc)
+      '@account-kit/signer': 4.82.1(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/smart-contracts': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/wallet-client': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))(zod@3.25.76)
       '@solana/web3.js': 1.98.4(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)
       js-cookie: 3.0.5
       viem: 2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5)
@@ -9395,9 +9414,9 @@ snapshots:
       - use-sync-external-store
       - utf-8-validate
 
-  '@account-kit/infra@4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))':
+  '@account-kit/infra@4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))':
     dependencies:
-      '@aa-sdk/core': 4.82.0(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@aa-sdk/core': 4.82.1(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@account-kit/logging': 4.82.1
       eventemitter3: 5.0.1
       viem: 2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5)
@@ -9419,10 +9438,10 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  '@account-kit/react-native-signer@4.82.0(6106e6a366c4b2047a7b738435c0d4dc)':
+  '@account-kit/react-native-signer@4.82.1(6106e6a366c4b2047a7b738435c0d4dc)':
     dependencies:
-      '@aa-sdk/core': 4.82.0(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/signer': 4.82.0(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@aa-sdk/core': 4.82.1(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/signer': 4.82.1(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@turnkey/crypto': 2.8.9
       '@turnkey/react-native-passkey-stamper': 1.2.7(react-native@0.76.9(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)
       react: 18.3.1
@@ -9443,13 +9462,13 @@ snapshots:
       - use-sync-external-store
       - utf-8-validate
 
-  '@account-kit/react-native@4.82.0(bb7d05242f4ade2aff78b9dd571134cf)':
+  '@account-kit/react-native@4.82.1(bb7d05242f4ade2aff78b9dd571134cf)':
     dependencies:
-      '@account-kit/core': 4.82.0(595b17d3945e8f6dae50dc332d63d777)
-      '@account-kit/infra': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/react': 4.82.0(36b74cd9cc7c8d8cf16a0fd859e639ce)
-      '@account-kit/react-native-signer': 4.82.0(6106e6a366c4b2047a7b738435c0d4dc)
-      '@account-kit/signer': 4.82.0(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/core': 4.82.1(595b17d3945e8f6dae50dc332d63d777)
+      '@account-kit/infra': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/react': 4.82.1(36b74cd9cc7c8d8cf16a0fd859e639ce)
+      '@account-kit/react-native-signer': 4.82.1(6106e6a366c4b2047a7b738435c0d4dc)
+      '@account-kit/signer': 4.82.1(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@noble/hashes': 1.7.1
       crypto-browserify: 3.12.1
       node-libs-react-native: 1.2.1
@@ -9505,13 +9524,13 @@ snapshots:
       - wagmi
       - ws
 
-  '@account-kit/react@4.82.0(36b74cd9cc7c8d8cf16a0fd859e639ce)':
+  '@account-kit/react@4.82.1(36b74cd9cc7c8d8cf16a0fd859e639ce)':
     dependencies:
-      '@account-kit/core': 4.82.0(595b17d3945e8f6dae50dc332d63d777)
-      '@account-kit/infra': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/core': 4.82.1(595b17d3945e8f6dae50dc332d63d777)
+      '@account-kit/infra': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@account-kit/logging': 4.82.1
-      '@account-kit/signer': 4.82.0(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/wallet-client': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))(zod@3.25.76)
+      '@account-kit/signer': 4.82.1(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/wallet-client': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))(zod@3.25.76)
       '@solana/wallet-adapter-react': 0.15.39(@solana/web3.js@1.98.4(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10))(bs58@6.0.0)(fastestsmallesttextencoderdecoder@1.0.22)(react-native@0.76.9(@babel/core@7.28.5)(@babel/preset-env@7.28.5(@babel/core@7.28.5))(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(utf-8-validate@5.0.10))(react@18.3.1)(typescript@5.3.3)
       '@solana/wallet-adapter-wallets': 0.19.37(5eaa471bd24f0f5c42ec662c0ee14d8a)
       '@solana/web3.js': 1.98.4(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)
@@ -9601,10 +9620,37 @@ snapshots:
       - use-sync-external-store
       - utf-8-validate
 
-  '@account-kit/smart-contracts@4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))':
+  '@account-kit/signer@4.82.1(@types/react@18.3.27)(bufferutil@4.1.0)(react@18.3.1)(typescript@5.3.3)(use-sync-external-store@1.4.0(react@18.3.1))(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))':
     dependencies:
-      '@aa-sdk/core': 4.82.0(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/infra': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@aa-sdk/core': 4.82.1(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/logging': 4.82.1
+      '@noble/curves': 1.9.7
+      '@noble/hashes': 1.7.1
+      '@noble/secp256k1': 2.3.0
+      '@solana/web3.js': 1.98.4(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)
+      '@turnkey/http': 3.16.1
+      '@turnkey/iframe-stamper': 2.9.0
+      '@turnkey/viem': 0.13.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))(zod@3.25.76)
+      '@turnkey/webauthn-stamper': 0.4.3
+      bs58: 6.0.0
+      jwt-decode: 4.0.0
+      viem: 2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5)
+      zod: 3.25.76
+      zustand: 5.0.9(@types/react@18.3.27)(react@18.3.1)(use-sync-external-store@1.4.0(react@18.3.1))
+    transitivePeerDependencies:
+      - '@types/react'
+      - bufferutil
+      - encoding
+      - immer
+      - react
+      - typescript
+      - use-sync-external-store
+      - utf-8-validate
+
+  '@account-kit/smart-contracts@4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))':
+    dependencies:
+      '@aa-sdk/core': 4.82.1(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/infra': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       viem: 2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5)
       webauthn-p256: 0.0.10
     transitivePeerDependencies:
@@ -9615,11 +9661,11 @@ snapshots:
       - typescript
       - utf-8-validate
 
-  '@account-kit/wallet-client@4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))(zod@3.25.76)':
+  '@account-kit/wallet-client@4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))(zod@3.25.76)':
     dependencies:
-      '@aa-sdk/core': 4.82.0(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/infra': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
-      '@account-kit/smart-contracts': 4.82.0(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@aa-sdk/core': 4.82.1(typescript@5.3.3)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/infra': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
+      '@account-kit/smart-contracts': 4.82.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(viem@2.44.1(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@4.3.5))
       '@alchemy/wallet-api-types': 0.1.0-alpha.18(bufferutil@4.1.0)(typescript@5.3.3)(utf-8-validate@5.0.10)(zod@3.25.76)
       deep-equal: 2.2.3
       ox: 0.6.12(typescript@5.3.3)(zod@3.25.76)
