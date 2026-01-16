@@ -36,6 +36,7 @@ export const AlchemyAuthSessionProvider = ({
 		sessionConfig: {
 			expirationTimeMs: 1000 * 60 * 60 * 24, // <-- Adjust the session expiration time as needed (currently 24 hours)
 		},
+		policyId: '1b26fa3c-8e1e-46c7-b96c-0fd876a23b2a',
 	});
 
 	return (

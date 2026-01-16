@@ -16,8 +16,11 @@ import { Text } from '@src/components/ui/text';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {Avatar, AvatarFallback, AvatarImage} from "@src/components/ui/avatar";
 import React from "react";
+import {router} from "expo-router";
+import {useLogout} from "@account-kit/react-native";
 
 export function ProfileDropDown() {
+  const { logout } = useLogout();
   const insets = useSafeAreaInsets();
   const contentInsets = {
     top: insets.top,
@@ -28,8 +31,8 @@ export function ProfileDropDown() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button size={'icon'} variant="ghost">
+      <DropdownMenuTrigger>
+        {/*<Button size={'icon'} variant="ghost">*/}
           <Avatar
             alt="Zach Nugent's Avatar"
             className={'size-12'}
@@ -39,9 +42,9 @@ export function ProfileDropDown() {
               <Text>BM</Text>
             </AvatarFallback>
           </Avatar>
-        </Button>
+        {/*</Button>*/}
       </DropdownMenuTrigger>
-      <DropdownMenuContent insets={contentInsets} sideOffset={2} className="w-56" align="start">
+      <DropdownMenuContent insets={contentInsets} sideOffset={2} className="w-56 px-2 mt-1 bg-card border-hairline border-muted-foreground/20 rounded-2xl" align="start">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
@@ -100,7 +103,10 @@ export function ProfileDropDown() {
           <Text>API</Text>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onPress={() => {
+          logout();
+          return router.replace("/sign-in");
+        }}>
           <Text>Log out</Text>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
