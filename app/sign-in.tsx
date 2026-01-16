@@ -4,7 +4,6 @@ import { Redirect, useRouter } from "expo-router";
 import { useCallback, useState } from "react";
 import {
 	View,
-	Text,
 	ViewStyle,
 	StyleProp,
 	StyleSheet,
@@ -13,6 +12,9 @@ import {
 	Pressable,
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { Text } from "@src/components/ui/text"
+import {ThemeToggle} from "@src/components/ThemeToggle";
+import {Button} from "@src/components/ui/button";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -62,6 +64,15 @@ export default function SignIn() {
 
 	return (
 		<View style={conatinerStyles({ top, bottom })}>
+			<Button size={'icon'}>
+				<ThemeToggle />
+			</Button>
+			<Text variant={'h1'}>Hello, world!</Text>
+			<View className="items-center justify-center">
+				<Text className="text-blue-500" variant={'large'}>
+					Welcome to Nativewind!
+				</Text>
+			</View>
 			<View style={styles.formContainer}>
 				<Text style={styles.titleText}>
 					{`Welcome! \nEnter Your Email to Sign In.`}

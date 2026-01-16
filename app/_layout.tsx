@@ -13,6 +13,12 @@ import { useEffect } from "react";
 import { AlchemyAuthSessionProvider } from "@src/context/AlchemyAuthSessionProvider";
 import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context";
 import { Platform } from "react-native";
+import '../global.css'
+import {PortalHost} from "@rn-primitives/portal";
+import {useColorScheme} from "@src/hooks/useColorScheme";
+import {DARK_THEME, LIGHT_THEME} from "@/src/lib/theme";
+import {ThemeProvider} from "@react-navigation/native";
+import {Toaster} from "sonner-native";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -26,6 +32,10 @@ export default function RootLayout() {
 	// Feel free to load and use whatever fonts of your choosing.
 	const [loaded, error] = useFonts({
 		SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+		MuliLight: require("../assets/fonts/muli/Muli-Light.ttf"),
+		Muli: require("../assets/fonts/muli/Muli.ttf"),
+		MuliBold: require("../assets/fonts/muli/Muli-Bold.ttf"),
+		MuliSemiBold: require("../assets/fonts/muli/Muli-SemiBold.ttf"),
 		...FontAwesome.font,
 	});
 
@@ -47,41 +57,68 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+	const {colorScheme, isDarkColorScheme} = useColorScheme();
+	const theme = isDarkColorScheme ? DARK_THEME : LIGHT_THEME
+
 	return (
 		<AlchemyAuthSessionProvider>
-			<SafeAreaProvider>
-				<SafeAreaView style={{ flex: 1 }}>
-					<Stack
-						screenOptions={{
-							headerShown: false,
-						}}
-					>
-						<Stack.Screen
-							name="otp-modal"
-							options={{
-								presentation:
-									Platform.OS === "ios"
-										? "formSheet"
-										: "containedTransparentModal",
-								animation:
-									Platform.OS === "android"
-										? "slide_from_bottom"
-										: "default",
+			<ThemeProvider value={theme}>
+				<SafeAreaProvider>
+					<SafeAreaView style={{ flex: 1, backgroundColor: isDarkColorScheme ? DARK_THEME.colors.background : LIGHT_THEME.colors.background }}>
+						<Stack
+							screenOptions={{
+								headerShown: false,
+								// contentStyle: { backgroundColor: isDarkColorScheme ? DARK_THEME.colors.background : LIGHT_THEME.colors.background }
 							}}
-						/>
-						<Stack.Screen
-							name="accounts/index"
-							options={{
-								animation:
-									Platform.OS === "android"
-										? "slide_from_bottom"
-										: "default",
-								headerShown: true,
+						>
+							<Stack.Screen
+								name="otp-modal"
+								options={{
+									presentation:
+										Platform.OS === "ios"
+											? "formSheet"
+											: "containedTransparentModal",
+									animation:
+										Platform.OS === "android"
+											? "slide_from_bottom"
+											: "default",
+								}}
+							/>
+							<Stack.Screen
+								name="accounts/index"
+								options={{
+									animation:
+										Platform.OS === "android"
+											? "slide_from_bottom"
+											: "default",
+								}}
+							/>
+						</Stack>
+
+						<Toaster
+							position="top-center"
+							offset={120}
+							duration={4000}
+							swipeToDismissDirection="left"
+							visibleToasts={3}
+							closeButton
+							autoWiggleOnUpdate="toast-change"
+							theme="system"
+							// icons={{
+							//   error: <Text>💥</Text>,
+							//   loading: <Text>🔄</Text>,
+							// }}
+							toastOptions={{
+								actionButtonStyle: {
+									paddingHorizontal: 20,
+								},
 							}}
+							pauseWhenPageIsHidden
 						/>
-					</Stack>
-				</SafeAreaView>
-			</SafeAreaProvider>
+					</SafeAreaView>
+				</SafeAreaProvider>
+				<PortalHost />
+			</ThemeProvider>
 		</AlchemyAuthSessionProvider>
 	);
 }

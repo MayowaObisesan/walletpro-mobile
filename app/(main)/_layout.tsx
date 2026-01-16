@@ -7,6 +7,9 @@ import { useSignerStatus } from "@account-kit/react-native";
 import { AlchemySignerStatus } from "@account-kit/signer";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { AppLoadingIndicator } from "@/src/components/app-loading";
+import {ThemeToggle} from "@src/components/ThemeToggle";
+import {Button} from "@src/components/ui/button";
+import {Text} from "@src/components/ui/text";
 
 export default function MainLayout() {
 	const { status, isAuthenticating } = useSignerStatus();
@@ -28,7 +31,10 @@ export default function MainLayout() {
 				options={{
 					title: "Welcome!",
 					header: () => (
-						<View style={[styles.header]}>
+						<View className={'flex flex-row items-center justify-end'} style={[styles.header]}>
+							<Button size={'icon'} variant={'ghost'}>
+								<ThemeToggle />
+							</Button>
 							<Pressable
 								style={{
 									marginLeft: "auto",
@@ -37,25 +43,31 @@ export default function MainLayout() {
 								onPressIn={() => router.navigate("/menu")}
 							>
 								{({ pressed }) => (
-									<Feather
-										name="menu"
-										size={25}
-										style={{
-											marginRight: 15,
-											opacity: pressed ? 0.5 : 1,
-										}}
-									/>
+									<Text>
+										<Feather
+											name="menu"
+											size={25}
+											style={{
+												marginRight: 15,
+												opacity: pressed ? 0.5 : 1,
+											}}
+										/>
+									</Text>
 								)}
 							</Pressable>
 						</View>
 					),
+					headerShown: false,
 				}}
 			/>
 			<Stack.Screen
 				name="menu"
 				options={{
 					header: () => (
-						<View style={styles.menuHeaderContainer}>
+						<View className={'flex flex-row items-center justify-end'} style={styles.menuHeaderContainer}>
+							<Button size={'icon'} variant={'ghost'}>
+								<ThemeToggle />
+							</Button>
 							<Pressable
 								style={styles.closeButtonWrapper}
 								onPressIn={() => router.dismiss()}
@@ -63,11 +75,13 @@ export default function MainLayout() {
 								<Feather
 									name="x"
 									size={22}
-									color={"rgba(10, 10, 10, 0.75)"}
+									// color={"rgba(10, 10, 10, 0.75)"}
+									className={'text-foreground'}
 								/>
 							</Pressable>
 						</View>
 					),
+					headerShown: false,
 					presentation:
 						Platform.OS === "ios"
 							? "formSheet"
@@ -84,6 +98,21 @@ export default function MainLayout() {
 					headerShown: false,
 				}}
 			/>
+			{/*<Stack.Screen
+				name="accounts"
+			/>
+			<Stack.Screen
+				name="send"
+			/>
+			<Stack.Screen
+				name="history"
+			/>
+			<Stack.Screen
+				name="settings"
+			/>
+			<Stack.Screen
+				name="about"
+			/>*/}
 		</Stack>
 	);
 }
@@ -91,13 +120,13 @@ export default function MainLayout() {
 const styles = StyleSheet.create({
 	menuHeaderContainer: {
 		width: "100%",
-		backgroundColor: "white",
+		// backgroundColor: "white",
 		paddingHorizontal: 20,
 		paddingVertical: 20,
 	},
 	header: {
 		width: "100%",
-		backgroundColor: "white",
+		// backgroundColor: "white",
 		paddingVertical: 10,
 		paddingHorizontal: 10,
 		shadowColor: "#585757",

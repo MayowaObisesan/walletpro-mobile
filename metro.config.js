@@ -2,6 +2,7 @@
 const { getDefaultConfig } = require("expo/metro-config");
 const path = require("path");
 const fs = require("fs");
+const { withNativeWind } = require('nativewind/metro');
 const projectRoot = __dirname; // <-- Adjust this as fits your project setup
 
 // Add aliases for file-system import based modules
@@ -69,4 +70,5 @@ config.resolver.unstable_conditionNames = [
 	"react-native",
 ];
 
-module.exports = config;
+module.exports = withNativeWind(config, { input: './global.css', inlineRem: 16 })
+// module.exports = config;
