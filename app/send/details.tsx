@@ -16,6 +16,7 @@ import {useChain, useSendUserOperation, useSmartAccountClient} from "@account-ki
 // import {client} from "@src/utils/client";
 import {Address, formatEther, parseEther} from "viem";
 import {Icon} from "@src/components/ui/icon";
+import {Switch} from "@src/components/ui/switch";
 
 export default function SendDetailsScreen() {
   const { fromAccount, toAccount } = useLocalSearchParams<{ fromAccount?: string; toAccount?: string; }>();
@@ -24,6 +25,30 @@ export default function SendDetailsScreen() {
   const { balance: myBalance, usdValue, isLoading, error, refetch } = useAccountBalanceWithUsd();
   const [amount, setAmount] = useState("");
   const [actualEthAmount, setActualEthAmount] = useState<string>("0")
+  const [gasSponsorshipStatus, setGasSponsorshipStatus] = useState<{
+    enabled: boolean
+    status: "active" | "inactive" | "not-configured"
+    message: string
+    icon: string
+  } | null>(null)
+
+  useEffect(() => {
+    client?.checkGasSponsorshipEligibility({
+      uo: {
+        target: "0x20da05400E7Dd3b76793469658CF34f6F3e7B31E",
+        data: "0x",
+        value: 0n,
+      }
+    }).then(res => {
+      console.log("[Send Screen] GasSponsorship", res);
+      setGasSponsorshipStatus({
+        enabled: res.eligible,
+        status: "active",
+        message: "Gas sponsorship is active",
+        icon: "zap",
+      })
+    })
+  }, [chain, toAccount]);
 
   // Handle sending transaction Operations
   const { sendUserOperation, sendUserOperationAsync, isSendingUserOperation,  } = useSendUserOperation({
@@ -76,13 +101,22 @@ export default function SendDetailsScreen() {
 
       <PageBody>
         {/*<div className="flex-1 overflow-auto pb-16">*/}
-        <View className="px-4 max-w-md mx-auto">
+        <View className="p-4 max-w-md mx-auto">
           {/* Network qualification callouts */}
           {/*{networkQualifiesForSponsorship && !gasSponsorshipStatus?.enabled && !amount && validationErrors.length === 0 && (*/}
           {/*  <Alert className={'flex flex-row items-center bg-[#132D21] pr-2.5 py-2 rounded-2xl'} icon={Info} iconClassName={'size-5 text-[#3DD68C] -mt-0.5'}>*/}
           {/*    <View className={'flex flex-row items-center'}>*/}
-          {/*      <AlertTitle className={'flex-1 bg-transparent text-lg text-[#3DD68C]'}>*/}
+          {/*      <AlertTitle className={'flex-1 bg-transparent text-lg text-blue-600'}>*/}
           {/*        We can sponsor the fee for this transaction.*/}
+          {/*        <Text className={''}>*/}
+          {/*          <View className={'gap-2'}>*/}
+          {/*            <Text>Enable Gas Sponsorship</Text>*/}
+          {/*            <Switch*/}
+          {/*              checked={false}*/}
+          {/*              // onCheckedChange={saveSettings}*/}
+          {/*            />*/}
+          {/*          </View>*/}
+          {/*        </Text>*/}
           {/*      </AlertTitle>*/}
           {/*    </View>*/}
           {/*    /!*<Callout.Root color="blue" size="1" className="mb-2">*/}
@@ -120,19 +154,20 @@ export default function SendDetailsScreen() {
 
           {/* Gas sponsorship notice */}
           {/*{networkQualifiesForSponsorship && gasSponsorshipStatus?.enabled && !amount && validationErrors.length === 0 && (*/}
-          {/*  <Alert className={'flex flex-row items-center bg-[#132D21] pr-2.5 py-2 rounded-2xl'} icon={Info} iconClassName={'size-5 text-[#3DD68C] -mt-0.5'}>*/}
-          {/*    /!*<Callout.Root color="grass" size="1" className="mb-2">*/}
-          {/*      <Callout.Text>*/}
-          {/*        You won't pay for transactions fees less than $1*/}
-          {/*      </Callout.Text>*/}
-          {/*    </Callout.Root>*!/*/}
-          {/*    <View className={'flex flex-row items-center'}>*/}
-          {/*      <AlertTitle className={'flex-1 bg-transparent text-lg text-[#3DD68C]'}>*/}
-          {/*        You won't pay for transactions fees less than $1*/}
-          {/*      </AlertTitle>*/}
-          {/*    </View>*/}
-          {/*  </Alert>*/}
-          {/*)}*/}
+          {gasSponsorshipStatus?.enabled && !amount && (
+            <Alert className={'flex flex-row items-center bg-[#132D21] pr-2.5 py-2 rounded-2xl'} icon={Info} iconClassName={'size-5 text-[#3DD68C] -mt-0.5'}>
+              {/*<Callout.Root color="grass" size="1" className="mb-2">
+                <Callout.Text>
+                  You won't pay for transactions fees less than $1
+                </Callout.Text>
+              </Callout.Root>*/}
+              <View className={'flex flex-row items-center'}>
+                <AlertTitle className={'flex-1 bg-transparent text-base text-[#3DD68C]'}>
+                  You won't pay for transactions fees less than $1
+                </AlertTitle>
+              </View>
+            </Alert>
+          )}
 
           {/* Validation Errors */}
           {/*{validationErrors.length > 0 && (*/}

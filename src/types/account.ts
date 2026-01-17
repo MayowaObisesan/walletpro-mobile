@@ -74,6 +74,9 @@ export interface AlchemyTransfer {
     address: string | null
     decimal: string
   }
+  metadata: {
+    blockTimestamp: Date
+  }
 }
 
 export interface AlchemyTransfersResponse {

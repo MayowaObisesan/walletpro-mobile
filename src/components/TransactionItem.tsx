@@ -9,6 +9,8 @@ import type { AlchemyTransfer } from '@src/types/account';
 import { useMemo } from 'react';
 import { formatAddress, formatValue } from '@src/utils/helper';
 import { useUser } from '@account-kit/react-native';
+import {DotSpacerSmall} from "@src/components/DotSpacer";
+import {formatTimestamp} from "@src/utils";
 
 interface TransactionItemProps {
   transaction: AlchemyTransfer;
@@ -87,48 +89,55 @@ export const TransactionItem: React.FC<TransactionItemProps> = ({
 
   return (
     <Pressable onPress={handlePress} className="active:opacity-70">
-      <Card className="mb-3">
-        <CardContent className="p-4">
+      <Card className="p-4 mb-3 border-hairline border-muted-foreground/20">
+        <CardContent className="p-0">
           <View className="flex-row items-center justify-between">
             {/* Left side: Icon and transaction info */}
-            <View className="flex-1 flex-row items-center gap-3">
+            <View className="flex-1 flex-row items-start gap-3">
               {/* Transaction direction icon */}
               <View className={`w-10 h-10 rounded-full items-center justify-center ${
-                isSent ? 'bg-red-100' : 'bg-green-100'
+                isSent ? 'bg-red-800/40' : 'bg-green-800/40'
               }`}>
                 <Icon
                   as={isSent ? ArrowUpRight : ArrowDownLeft}
                   size={20}
-                  className={isSent ? 'text-red-600' : 'text-green-600'}
+                  className={isSent ? 'text-red-500' : 'text-green-500'}
+                  strokeWidth={3}
                 />
               </View>
 
               {/* Transaction details */}
               <View className="flex-1">
-                <View className="flex-row items-center gap-2 mb-1">
-                  <Text className="font-medium text-foreground">
+                <View className="flex-row items-center gap-1">
+                  <Text className="font-medium text-muted-foreground">
                     {isSent ? 'Sent' : 'Received'}
                   </Text>
-                  <Badge variant={getCategoryVariant(transaction.category)}>
-                    <Text className="text-xs">{transaction.asset}</Text>
-                  </Badge>
-                </View>
-
-                <View className="flex-row items-center gap-2">
-                  <Text className="text-sm text-muted-foreground">
-                    {isSent ? 'To: ' : 'From: '}
-                    {formatAddress(isSent ? transaction.to : transaction.from)}
+                  <Text className="font-bold text-lg text-foreground leading-tight">
+                    {transaction.value} {transaction.asset}
                   </Text>
+                  {/*<Badge variant={getCategoryVariant(transaction.category)}>
+                    <Text className="text-xs">{transaction.asset}</Text>
+                  </Badge>*/}
                 </View>
 
-                <Text className="text-xs text-muted-foreground mt-1">
-                  {formattedTime}
+                <View className="flex-row items-center gap-1">
+                  <Text className="font-medium text-base text-muted-foreground">
+                    {isSent ? 'to ' : 'from '}
+                  </Text>
+                  <Text className={'font-medium mr-1'}>{formatAddress(isSent ? transaction.to : transaction.from)}</Text>
+                  <DotSpacerSmall />
+                  <Text>{formatTimestamp(transaction.metadata?.blockTimestamp)}</Text>
+                </View>
+
+                <Text className="font-semibold text-sm text-foreground/70 mt-1">
+                  {/*{formattedTime}*/}
+                  Block: {parseInt(transaction.blockNum, 16).toLocaleString()}
                 </Text>
               </View>
             </View>
 
             {/* Right side: Amount and category */}
-            <View className="items-end gap-2">
+            <View className="hidden items-end gap-2">
               <Text className={`font-semibold ${
                 isSent ? 'text-red-600' : 'text-green-600'
               }`}>

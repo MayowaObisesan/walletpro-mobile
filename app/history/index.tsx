@@ -30,18 +30,22 @@ export default function HistoryScreen() {
       </PageHeader>
 
       <PageBody>
-        {/* Filters */}
-        <TransactionFilters
-          filters={filters}
-          onFiltersChange={setFilters}
-        />
+        <View>
+          {/* Filters */}
+          <TransactionFilters
+            filters={filters}
+            onFiltersChange={setFilters}
+          />
 
-        {/* Transaction List */}
-        <TransactionList
-          filters={filters}
-          onTransactionPress={handleTransactionPress}
-          onClearFilters={handleClearFilters}
-        />
+          <View className={"p-2"}>
+            {/* Transaction List */}
+            <TransactionList
+              filters={filters}
+              onTransactionPress={handleTransactionPress}
+              onClearFilters={handleClearFilters}
+            />
+          </View>
+        </View>
       </PageBody>
     </PageContainer>
   );
