@@ -59,43 +59,31 @@ export const TransactionFilters: React.FC<TransactionFiltersProps> = ({
   const activeCategoriesCount = filters.categories.length;
 
   return (
-    <View className={`bg-card border-border border-b p-4 ${className}`}>
+    <View className={`p-4 ${className}`}>
       {/* Search Input */}
       <View className="mb-4">
-        <View className="relative">
+        <View className="relative flex-row items-center justify-between gap-2">
           <Icon
             as={Search}
             size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            className="absolute left-5 text-muted-foreground"
           />
           <Input
             placeholder="Search by hash, address, or amount..."
             value={localSearchQuery}
             onChangeText={handleSearchChange}
-            className="pl-10"
+            className="px-4 pl-12 h-14 rounded-2xl flex-1"
             clearButtonMode="while-editing"
           />
-        </View>
-      </View>
-
-      {/* Category Filters */}
-      <View className="mb-4">
-        <View className="flex-row items-center justify-between mb-2">
-          <Text className="text-sm font-medium text-foreground">
-            Categories
-            {activeCategoriesCount > 0 && (
-              <Text className="text-muted-foreground"> ({activeCategoriesCount})</Text>
-            )}
-          </Text>
 
           {/* Quick Actions Dropdown */}
           <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <Icon as={Filter} size={14} />
-              </Button>
+            <DropdownMenuTrigger className={"items-center justify-center w-12 h-12 bg-card border-hairline border-muted-foreground/20 rounded-xl"}>
+              {/*<Button variant="ghost" size="sm">*/}
+              <Icon as={Filter} size={16} />
+              {/*</Button>*/}
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className={'bg-secondary border-hairline border-muted-foreground/20 mt-1'}>
               <DropdownMenuItem onPress={() => onFiltersChange({
                 ...filters,
                 categories: ALL_CATEGORIES
@@ -123,6 +111,18 @@ export const TransactionFilters: React.FC<TransactionFiltersProps> = ({
             </DropdownMenuContent>
           </DropdownMenu>
         </View>
+      </View>
+
+      {/* Category Filters */}
+      <View className="mb-4">
+        <View className="hidden flex-row items-center justify-between mb-2">
+          <Text className="text-sm font-medium text-foreground">
+            Categories
+            {activeCategoriesCount > 0 && (
+              <Text className="text-muted-foreground"> ({activeCategoriesCount})</Text>
+            )}
+          </Text>
+        </View>
 
         {/* Category Pills */}
         <View className="flex-row flex-wrap gap-2">
@@ -136,14 +136,14 @@ export const TransactionFilters: React.FC<TransactionFiltersProps> = ({
                 className="cursor-pointer"
               >
                 <Badge
-                  variant={isActive ? 'default' : 'outline'}
+                  variant={isActive ? 'default' : 'secondary'}
                   className={`${
                     isActive 
                       ? CATEGORY_COLORS[category] 
                       : 'border-border'
                   }`}
                 >
-                  <Text className={`text-xs ${
+                  <Text className={`text-sm ${
                     isActive ? 'text-primary-foreground' : 'text-foreground'
                   }`}>
                     {CATEGORY_LABELS[category]}

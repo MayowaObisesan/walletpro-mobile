@@ -12,6 +12,7 @@ import {Card} from "@src/components/ui/card";
 import {Text} from "@src/components/ui/text"
 import {Button} from "@src/components/ui/button";
 import {Ionicons} from "@expo/vector-icons";
+import {Icon} from "@src/components/ui/icon";
 
 export default function QRCodeDialog() {
   const user = useUser();
@@ -65,7 +66,7 @@ export default function QRCodeDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <Button size={'icon'} variant={'secondary'}>
-          <QrCode />
+          <Icon as={QrCode} size={24} className={'text-foreground'} />
         </Button>
       </DialogTrigger>
 
@@ -103,9 +104,9 @@ export default function QRCodeDialog() {
         </View>
 
         {/* Address Display */}
-        <Card className={'mt-1 bg-background border-0'}>
+        <Card className={'p-0 mt-1 bg-background border-0'}>
           <View>
-            <Text className="font-bold font-space-mono text-sm break-all">
+            <Text className="font-bold font-space-mono text-xl text-center break-all">
               {user?.address}
             </Text>
           </View>
@@ -125,21 +126,21 @@ export default function QRCodeDialog() {
           </CopyTextComponent>*/}
         </View>
 
-        <Card className="mt-2 bg-background border-0 rounded-lg p-5">
-          <Text className="mb-2 text-sm font-medium">Instructions</Text>
-          <View className="list-decimal space-y-2 pl-4 text-sm">
-            <Text>Scan this QRCode to copy your address</Text>
+        <Card className="mt-2 bg-background border-0 rounded-lg p-5 gap-2">
+          <Text className="text-base font-medium">Instructions</Text>
+          <View className="text-base gap-2">
+            <Text className={'text-lg'}>1. Scan this QRCode to copy your address</Text>
             {getNetworkType() === "mainnet" && (
-              <Text>
-                Send <Text className={'text-amber-400'}><Text className={'font-bold text-amber-400'}>{chain?.name}</Text></Text> to this
+              <Text className={'text-lg'}>
+                2. Send <Text className={'text-amber-400 text-lg'}>{chain?.name}</Text> to this
                 address from another wallet or exchange
               </Text>
             )}
             {chain?.testnet && (
               <>
-                <Text>
-                  You are currently on {getNetworkType()}. Make sure you are only sending{" "}
-                  <Text className={'text-green-600'}><Text className={'font-bold text-green-600'}>{chain?.name}</Text></Text>
+                <Text className={'text-lg'}>
+                  2. You are currently on {getNetworkType()}. Make sure you are only sending{" "}
+                  <Text className={'font-bold text-green-600'}>{chain?.name}</Text>
                 </Text>
                 {/*<li>
                   You can also get {getNetworkType()} faucets from the{" "}
