@@ -76,7 +76,7 @@ export type GridAutoFlow =
 /**
  * Heading levels
  */
-export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 /**
  * Spacing values (number or Tailwind spacing string)

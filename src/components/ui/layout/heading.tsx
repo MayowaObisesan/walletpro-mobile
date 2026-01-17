@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { Platform, Text } from 'react-native';
 import { cn } from '@/src/lib/utils';
 import type { HeadingProps } from './types';
+import type { TextStyle } from 'react-native';
 import { 
   getHeadingClass,
   getWebAccessibilityProps,
@@ -54,7 +55,7 @@ export const Heading = React.forwardRef<React.ElementRef<typeof Text>, HeadingPr
     webOnly,
     nativeOnly,
     // Heading specific props
-    level = 1,
+    level = 3,
     variant,
     as,
     align,
@@ -145,9 +146,9 @@ export const Heading = React.forwardRef<React.ElementRef<typeof Text>, HeadingPr
     // Merge styles
     const mergedStyle = useMemo(() => {
       if (!computedStyle || Object.keys(computedStyle).length === 0) {
-        return style;
+        return style as TextStyle;
       }
-      return [style, computedStyle];
+      return [style as TextStyle, computedStyle] as TextStyle[];
     }, [style, computedStyle]);
     
     // Filter platform-specific props

@@ -207,6 +207,21 @@ export const getContainerClass = (maxWidth?: string, center?: boolean, px?: Spac
 };
 
 /**
+ * Maps heading levels to Tailwind font size classes
+ */
+const headingSizeMap: Record<number, string> = {
+  1: 'text-xs',    // Smallest
+  2: 'text-sm',    
+  3: 'text-base',  
+  4: 'text-lg',    
+  5: 'text-xl',    
+  6: 'text-2xl',   
+  7: 'text-3xl',   
+  8: 'text-4xl',   
+  9: 'text-5xl',   // Largest
+};
+
+/**
  * Maps heading props to Tailwind classes
  */
 export const getHeadingClass = (
@@ -218,9 +233,16 @@ export const getHeadingClass = (
 ): string => {
   const classes = [];
 
-  // Use variant first, then fall back to level
-  const headingSize = variant || (level ? `h${level}` : 'h1');
-  classes.push(`text-${headingSize}`);
+  // Use variant first, then fall back to level mapping
+  let textSize = variant || (level ? headingSizeMap[level] || headingSizeMap[3] : headingSizeMap[3]);
+  
+  // Handle legacy h1-h6 variants by mapping them to levels
+  if (variant && variant.match(/^h[1-6]$/)) {
+    const variantLevel = parseInt(variant.substring(1));
+    textSize = headingSizeMap[variantLevel] || headingSizeMap[3];
+  }
+  
+  classes.push(textSize);
 
   // Text alignment
   if (align && align !== 'left') {

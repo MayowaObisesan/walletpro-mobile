@@ -1,5 +1,6 @@
 import {PageBody, PageContainer, PageHeader, PageHeading} from "@src/components/PageSection";
 import {View} from "react-native";
+import {Flex} from "@src/components/ui/layout";
 
 export default function ThemeSettingsScreen() {
   return (
@@ -11,7 +12,7 @@ export default function ThemeSettingsScreen() {
         {/* Content */}
         <View className="flex-1 overflow-auto p-4 space-y-6">
           {/* Theme Selection */}
-          <div className="space-y-3">
+          <Flex className="space-y-3">
             <RadioCards.Root color={'grass'} defaultValue="1" columns={{ initial: "1", sm: "3" }} value={theme} onValueChange={handleThemeChange}>
               <RadioCards.Item value="light">
                 <Flex align={'center'} gap={'2'} width="100%">
@@ -79,7 +80,7 @@ export default function ThemeSettingsScreen() {
                 </Text>
               </Flex>
             </RadioGroup.Root>
-          </div>
+          </Flex>
         </View>
       </PageBody>
     </PageContainer>

@@ -10,15 +10,19 @@ export default function MyComponent() {
         <PageHeading>Testing Layout Page</PageHeading>
       </PageHeader>
       <PageBody>
-        <Container center={false} className={'flex-1'} maxWidth="md">
-          <VStack align={'stretch'} className={'bg-green-600'} space={8}>
-            <Heading as={'h1'} level={6}>Welcome</Heading>
+        <Container maxWidth="md">
+          <VStack align={'stretch'} className={''} space={8}>
+            <Heading level={1}>Level 1 (text-xs - Smallest)</Heading>
+            <Heading level={3}>Level 3 (text-base - Default)</Heading>
+            <Heading>Default Heading</Heading>
+            <Heading level={6}>Level 6 (text-2xl)</Heading>
+            <Heading level={9}>Level 9 (text-5xl - Largest)</Heading>
             <Flex direction={'row'} justify="between" align="center">
               <Text>Left content</Text>
               <Text>Center content</Text>
               <Text>Right content</Text>
             </Flex>
-            <Grid className={'bg-green-600'} columns={4} gap={2} rows={2}>
+            <Grid className={''} columns={3} rows={2}>
               <Card>
                 <Text>Item 1</Text>
               </Card>
