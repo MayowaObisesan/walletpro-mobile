@@ -8,7 +8,7 @@ import {
   ChevronRight,
   Info, LucideCloud, LucideCloudBackup,
   LucideFingerprint,
-  LucideIcon,
+  LucideIcon, LucideLayout,
   LucideLockKeyhole,
   LucideMoonStar, LucideScanEye,
   LucideUserStar, LucideZap, ShieldCheck
@@ -215,6 +215,8 @@ export default function SettingScreen() {
               <SettingsItem icon={LucideLockKeyhole} title={"Lock Wallet"} onPress={() => Alert.alert("I will lock the wallet")} />
               <SettingsItem icon={LucideFingerprint} title={"Set Passkey"} onPress={() => router.push('/settings/passkey')} />
             </SettingsSection>
+
+            <SettingsItem icon={LucideLayout} title={"Layout"} onPress={() => router.push('/settings/custom_layout')} />
           </View>
         </ScrollView>
       </PageBody>
