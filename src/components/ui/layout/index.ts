@@ -73,6 +73,10 @@ export {
 } from './section';
 
 export {
+  Text
+} from './text';
+
+export {
   Heading,
   H1,
   H2,

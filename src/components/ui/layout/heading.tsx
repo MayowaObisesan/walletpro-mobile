@@ -84,7 +84,7 @@ export const Heading = React.forwardRef<React.ElementRef<typeof Text>, HeadingPr
         level,
         headingConfig.variant,
         align,
-        weight,
+        weight || 'bold', // Default to font-bold
         truncate
       );
     }, [level, headingConfig.variant, align, weight, truncate]);

@@ -223,12 +223,28 @@ export interface SectionProps extends BoxProps {
  * Props for Heading component
  */
 export interface HeadingProps extends BoxProps {
-  /** Heading level (1-6) */
+  /** Heading level (1-9) */
   level?: HeadingLevel;
   /** Heading variant for styling */
   variant?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
   /** Custom heading element type */
   as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'div' | 'span';
+  /** Text alignment */
+  align?: 'left' | 'center' | 'right' | 'justify';
+  /** Text weight */
+  weight?: 'thin' | 'extralight' | 'light' | 'normal' | 'medium' | 'semibold' | 'bold' | 'extrabold' | 'black';
+  /** Whether to truncate text */
+  truncate?: boolean;
+  /** Number of lines to show */
+  numberOfLines?: number;
+}
+
+/**
+ * Props for Text component (non-semantic version of Heading)
+ */
+export interface TextProps extends Omit<BoxProps, 'as'> {
+  /** Text level (1-9) for font sizing */
+  level?: HeadingLevel;
   /** Text alignment */
   align?: 'left' | 'center' | 'right' | 'justify';
   /** Text weight */
