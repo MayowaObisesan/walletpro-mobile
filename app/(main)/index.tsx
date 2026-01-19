@@ -13,14 +13,16 @@ import {ThemeToggle} from "@src/components/ThemeToggle";
 import Feather from "@expo/vector-icons/Feather";
 import {ChainSelect} from "@src/components/ChainSelect";
 import {useAccountBalanceWithUsd} from "@src/hooks/useAccountBalanceWithUsd";
+import {useAccountTokens, usePortfolioValue} from "@src/hooks/useAccountTokens";
 import {Ionicons} from "@expo/vector-icons";
 import {toast} from "sonner-native";
 import {Alert, AlertTitle} from "@src/components/ui/alert";
-import {Info, Terminal} from "lucide-react-native";
+import {Info, Terminal, Coins} from "lucide-react-native";
 import QRCode from 'react-native-qrcode-svg'
 import QRCodeDialog from "@src/components/QRCode/QRCode";
 import {ProfileDropDown} from "@src/components/ProfileDropDown";
-import {Divider, Flex, Heading, VStack} from "@src/components/ui/layout";
+import {Divider, Flex, Heading, HStack, VStack} from "@src/components/ui/layout";
+import {TokenCard} from "@src/components/TokenCard";
 
 export default function TabOneScreen() {
 	const user = useUser();
@@ -30,6 +32,8 @@ export default function TabOneScreen() {
 	});
 	const { chain, setChain, isSettingChain } = useChain();
 	const { balance: myBalance, usdValue, isLoading, error, refetch } = useAccountBalanceWithUsd();
+	const { data: tokens = [], isLoading: tokensLoading } = useAccountTokens();
+	const { totalValue, tokenCount } = usePortfolioValue();
 
 	const account = client?.account;
 
@@ -173,15 +177,64 @@ export default function TabOneScreen() {
 
 						<VStack className={'px-4 py-8'} space={4}>
 							<VStack>
-								<Heading>Tokens</Heading>
+								<HStack className="items-center justify-between">
+									<Heading>Tokens</Heading>
+									{tokenCount > 0 && (
+										<Button
+											variant="ghost"
+											size="sm"
+											onPress={() => router.push('/tokens')}
+											className="px-2"
+										>
+											<Text className="text-primary text-sm">View All ({tokenCount})</Text>
+										</Button>
+									)}
+								</HStack>
 								<Text className={'text-sm text-muted-foreground'}>
-									You can send and receive tokens to and from this account.
+									{tokenCount > 0
+										? `You have ${tokenCount} token${tokenCount === 1 ? '' : 's'} in this wallet`
+										: 'You can send and receive tokens to and from this account.'
+									}
 								</Text>
 							</VStack>
 
-							<Flex direction={'row'}>
-								{/* Add the Tokens list here */}
-							</Flex>
+							{/* Show top 5 tokens or empty state */}
+							{tokensLoading ? (
+								<View className="flex-row justify-center py-4">
+									<ActivityIndicator size="small" />
+									<Text className="ml-2 text-muted-foreground text-sm">Loading tokens...</Text>
+								</View>
+							) : tokens.length > 0 ? (
+								<VStack space={2}>
+									{tokens.slice(0, 5).map((token) => (
+										<TokenCard
+											key={token.address}
+											token={token}
+											onPress={() => router.push(`/tokens/${token.address}`)}
+											variant="compact"
+										/>
+									))}
+									{tokens.length > 5 && (
+										<Button
+											variant="outline"
+											onPress={() => router.push('/tokens')}
+											className="w-full mt-2"
+										>
+											<Text>View All {tokens.length} Tokens</Text>
+										</Button>
+									)}
+								</VStack>
+							) : (
+								<View className="flex-col items-center py-8">
+									<Coins size={48} className="text-muted-foreground mb-4" />
+									<Text className="text-center text-muted-foreground mb-4">
+										No tokens found
+									</Text>
+									<Text className="text-center text-sm text-muted-foreground">
+										Tokens will appear here when you receive them
+									</Text>
+								</View>
+							)}
 						</VStack>
 
 						{/* Documentation Info */}
