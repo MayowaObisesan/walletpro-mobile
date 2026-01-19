@@ -21,6 +21,7 @@ import {Info, Terminal} from "lucide-react-native";
 import QRCode from 'react-native-qrcode-svg'
 import QRCodeDialog from "@src/components/QRCode/QRCode";
 import {ProfileDropDown} from "@src/components/ProfileDropDown";
+import {Divider, Flex, Heading, VStack} from "@src/components/ui/layout";
 
 export default function TabOneScreen() {
 	const user = useUser();
@@ -167,7 +168,22 @@ export default function TabOneScreen() {
 							</Text>*/}
 						</View>
 
-						<View style={styles.separator}/>
+						{/*<View style={styles.separator}/>*/}
+
+						<Divider />
+
+						<VStack className={'px-4 py-8'} space={4}>
+							<VStack>
+								<Heading>Tokens</Heading>
+								<Text className={'text-sm text-muted-foreground'}>
+									You can send and receive tokens to and from this account.
+								</Text>
+							</VStack>
+
+							<Flex direction={'row'}>
+								{/* Add the Tokens list here */}
+							</Flex>
+						</VStack>
 
 						{/* Documentation Info */}
 						<View className={'hidden'} style={{marginTop: "auto", marginBottom: bottom}}>

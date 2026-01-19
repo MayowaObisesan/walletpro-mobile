@@ -10,7 +10,7 @@ export default function MyComponent() {
       </PageHeader>
       <PageBody>
         <Container maxWidth="md">
-          <HStack align={'stretch'} justify={'center'} className={'bg-orange-300'} space={8}>
+          <HStack align={'stretch'} justify={'center'} className={''} space={8}>
             <Text>Left content</Text>
             <Text>Center content</Text>
             <Text>Right content</Text>
