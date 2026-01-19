@@ -193,6 +193,8 @@ export interface StackProps extends BoxProps {
   space?: SpacingValue;
   /** Whether to wrap items */
   wrap?: FlexWrap;
+  /** Whether to gap items */
+  gap?: SpacingValue;
 }
 
 /**
