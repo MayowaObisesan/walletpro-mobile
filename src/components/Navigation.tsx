@@ -107,6 +107,21 @@ export function BottomNavigation() {
           </Link>
         </Button>*/}
 
+        {/*<Link
+          asChild
+          href="/tokens"
+        >
+          <Button
+            className={'flex flex-col items-center'}
+            variant={'ghost'}
+          >
+            <Text className={'relative leading-relaxed'}>
+              <Ionicons name={'layers'} size={24} />
+            </Text>
+            <Text className="text-xs font-medium truncate">Tokens</Text>
+          </Button>
+        </Link>*/}
+
         <Link
           asChild
           href="/history"
