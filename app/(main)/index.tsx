@@ -11,7 +11,6 @@ import {PageBody, PageContainer, PageHeader, PageHeading} from "@src/components/
 import {Button} from "@src/components/ui/button";
 import {ThemeToggle} from "@src/components/ThemeToggle";
 import Feather from "@expo/vector-icons/Feather";
-import {Avatar, AvatarFallback, AvatarImage} from "@src/components/ui/avatar";
 import {ChainSelect} from "@src/components/ChainSelect";
 import {useAccountBalanceWithUsd} from "@src/hooks/useAccountBalanceWithUsd";
 import {Ionicons} from "@expo/vector-icons";

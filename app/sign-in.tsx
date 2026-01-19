@@ -16,6 +16,8 @@ import { Text } from "@src/components/ui/text"
 import {ThemeToggle} from "@src/components/ThemeToggle";
 import {Button} from "@src/components/ui/button";
 import {Input} from "@src/components/ui/input";
+import {Container, Heading, Text as LText, Section, VStack, HStack} from "@src/components/ui/layout";
+import {DotSpacer} from "@src/components/DotSpacer";
 
 const windowWidth = Dimensions.get("window").width;
 
@@ -65,11 +67,40 @@ export default function SignIn() {
 
 	return (
 		<View style={conatinerStyles({ top, bottom })}>
-			<View className={'flex-1 justify-end items-center gap-4'}>
-				<View className={'flex-1 items-center rounded-3xl bg-card p-4'}>
-					<Text className={'text-center'}>{" "}</Text>
+			<View className={'flex-1 justify-end items-center gap-4 px-16'}>
+				<VStack align={'center'} justify={'center'}>
+					<LText className={'font-semibold'} level={6}>
+						WalletPro
+					</LText>
+					<Text className={'text-center text-base text-muted-foreground'}>
+						Use Crypto Securely and for Free
+					</Text>
+				</VStack>
+				<View className={'min-w-full flex-1 rounded-3xl bg-card p-4'}>
+					<VStack align={'center'} justify={'center'} space={8} className={'flex-1'}>
+						<VStack align={'center'} gap={8}>
+							<HStack align={'center'} gap={8}>
+								<DotSpacer className={'bg-green-600'} />
+								<Heading weight={'medium'} level={5}>
+									Easy Email Signup
+								</Heading>
+							</HStack>
+							<HStack align={'center'} gap={8}>
+								<DotSpacer className={'bg-green-600'} />
+								<Heading weight={'medium'} level={5}>
+									Don't pay for gas fees
+								</Heading>
+							</HStack>
+							<HStack align={'center'} gap={8}>
+								<DotSpacer className={'bg-green-600'} />
+								<Heading weight={'medium'} level={5}>
+									Free forever
+								</Heading>
+							</HStack>
+						</VStack>
+					</VStack>
 				</View>
-				<Button className={'items-center mb-4 rounded-2xl size-12'} size={'icon'} variant={'secondary'}>
+				<Button className={'hidden items-center mb-4 rounded-2xl size-12'} size={'icon'} variant={'secondary'}>
 					<Text>
 						<ThemeToggle />
 					</Text>
