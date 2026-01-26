@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { useUser, useChain } from '@account-kit/react-native';
-import type { Address } from 'viem';
+import type { Address, Chain } from 'viem';
 import { TokenBalance } from '@src/types/account';
+import Constants from 'expo-constants';
 
 // Query key factory for type safety
 export const accountTokensKeys = {
@@ -13,7 +14,7 @@ export const accountTokensKeys = {
 const transformAlchemyToken = (alchemyToken: any): TokenBalance => {
   const usdPrice = alchemyToken.tokenPrices?.find((price: any) => price.currency === 'usd')?.value;
   const tokenBalance = alchemyToken.tokenBalance || 0;
-  
+
   return {
     address: alchemyToken.tokenAddress as Address,
     symbol: alchemyToken.tokenMetadata?.symbol || 'UNKNOWN',
@@ -26,22 +27,139 @@ const transformAlchemyToken = (alchemyToken: any): TokenBalance => {
   };
 };
 
-// Chain mapping for Alchemy API
-const getAlchemyNetwork = (chainId: number): string => {
-  const chainMap: Record<number, string> = {
-    1: 'eth-mainnet',
-    11155111: 'eth-sepolia',
-    8453: 'base-mainnet',
-    84532: 'base-sepolia',
-    137: 'polygon-mainnet',
-    80001: 'polygon-mumbai',
-    10: 'optimism-mainnet',
-    69: 'optimism-sepolia',
-    42161: 'arbitrum-mainnet',
-    421614: 'arbitrum-sepolia',
+// Alchemy API helper to get token balances
+const fetchAlchemyTokenBalances = async (
+  address: Address,
+  chain: Chain
+): Promise<TokenBalance[]> => {
+  const apiKey = Constants.expoConfig?.extra?.EXPO_PUBLIC_ALCHEMY_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('Alchemy API key not found in environment variables');
+  }
+
+  // Determine the correct RPC URL based on chain
+  console.log("[fetch Alchemy Token Balances] rpcurl", chain.rpcUrls.alchemy);
+  /*let rpcUrl: string;
+  switch (chain.id) {
+    case 1: // Ethereum Mainnet
+      rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 11155111: // Sepolia
+      rpcUrl = `https://eth-sepolia.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 137: // Polygon
+      rpcUrl = `https://polygon-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 10: // Optimism
+      rpcUrl = `https://opt-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 42161: // Arbitrum
+      rpcUrl = `https://arb-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 8453: // Base
+      rpcUrl = `https://base-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    default:
+      throw new Error(`Unsupported chain ID: ${chain.id}`);
+  }*/
+
+  const rpcUrl = `${chain.rpcUrls.alchemy.http[0]}/${apiKey}`;
+  // Request body for alchemy_getTokenBalances
+  const requestBody = {
+    jsonrpc: "2.0",
+    method: "alchemy_getTokenBalances",
+    params: [address, ["erc20", "NATIVE"]],
+    id: 1
   };
-  
-  return chainMap[chainId] || 'eth-mainnet';
+
+  const response = await fetch(rpcUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    // body: JSON.stringify(requestBody),
+    body: JSON.stringify([address, ["erc20", "NATIVE"]]),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status} - ${await response.text()}`);
+  }
+
+  const data = await response.json();
+
+  if (data.error) {
+    throw new Error(`Alchemy API error: ${data.error.message}`);
+  }
+
+  return data.result?.tokenBalances || [];
+};
+
+// Alchemy API helper to get token metadata
+const fetchAlchemyTokenMetadata = async (
+  contractAddress: string,
+  chain: Chain
+): Promise<any> => {
+  const apiKey = Constants.expoConfig?.extra?.EXPO_PUBLIC_ALCHEMY_API_KEY;
+
+  if (!apiKey) {
+    throw new Error('Alchemy API key not found in environment variables');
+  }
+
+  // Determine the correct RPC URL based on chain
+  /*let rpcUrl: string;
+  switch (chain.id) {
+    case 1: // Ethereum Mainnet
+      rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 11155111: // Sepolia
+      rpcUrl = `https://eth-sepolia.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 137: // Polygon
+      rpcUrl = `https://polygon-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 10: // Optimism
+      rpcUrl = `https://opt-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 42161: // Arbitrum
+      rpcUrl = `https://arb-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    case 8453: // Base
+      rpcUrl = `https://base-mainnet.g.alchemy.com/v2/${apiKey}`;
+      break;
+    default:
+      throw new Error(`Unsupported chain ID: ${chain.id}`);
+  }*/
+
+  const rpcUrl = `${chain.rpcUrls.alchemy.http[0]}/${apiKey}`
+
+  // Request body for alchemy_getTokenMetadata
+  const requestBody = {
+    jsonrpc: "2.0",
+    method: "alchemy_getTokenMetadata",
+    params: [contractAddress],
+    id: 1
+  };
+
+  const response = await fetch(rpcUrl, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(requestBody),
+  });
+
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status} - ${await response.text()}`);
+  }
+
+  const data = await response.json();
+
+  if (data.error) {
+    throw new Error(`Alchemy API error: ${data.error.message}`);
+  }
+
+  return data.result;
 };
 
 export const useAccountTokens = (address?: Address) => {
@@ -53,54 +171,52 @@ export const useAccountTokens = (address?: Address) => {
     queryKey: targetAddress ? accountTokensKeys.tokens(targetAddress, chain.id) : accountTokensKeys.all,
     queryFn: async () => {
       if (!targetAddress) return [];
-      
-      try {
-        // For now, we'll use mock data until we can properly integrate with Alchemy MCP server
-        // In a real implementation, you would use the Alchemy API directly
-        const mockTokens: TokenBalance[] = [
-          {
-            address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' as Address,
-            symbol: 'USDC',
-            name: 'USD Coin',
-            balance: '610970',
-            decimals: 6,
-            usdPrice: 0.9997022402,
-            usdValue: 610.97,
-            logo: 'https://static.alchemyapi.io/images/assets/3408.png',
-          },
-          {
-            address: '0x6B175474E89094C44Da98b954EedeAC495271d0F' as Address,
-            symbol: 'DAI',
-            name: 'Dai Stablecoin',
-            balance: '544444444444444500000',
-            decimals: 18,
-            usdPrice: 0.9995974709,
-            usdValue: 544.44,
-            logo: 'https://static.alchemyapi.io/images/assets/4943.png',
-          },
-          {
-            address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599' as Address,
-            symbol: 'WBTC',
-            name: 'Wrapped Bitcoin',
-            balance: '12401',
-            decimals: 8,
-            usdPrice: 92374.4265763159,
-            usdValue: 1.15,
-            logo: 'https://static.alchemyapi.io/images/assets/3717.png',
-          },
-          {
-            address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' as Address,
-            symbol: 'WETH',
-            name: 'Wrapped Ether',
-            balance: '100000000000000',
-            decimals: 18,
-            usdPrice: 3209.5553511037,
-            usdValue: 0.000321,
-            logo: 'https://static.alchemyapi.io/images/assets/2396.png',
-          },
-        ];
 
-        return mockTokens;
+      try {
+        // Step 1: Fetch token balances
+        console.log("[fetch Alchemy Token Balances] targetAddress", targetAddress);
+        const tokenBalances = await fetchAlchemyTokenBalances(targetAddress, chain);
+        console.log("[fetch Alchemy Token Balances] tokenBalances", tokenBalances);
+
+        // Step 2: Fetch metadata for each token
+        const tokensWithMetadata = await Promise.all(
+          tokenBalances.map(async (token: any) => {
+            // Skip tokens with errors
+            if (token.error || !token.contractAddress) {
+              return null;
+            }
+
+            try {
+              const metadata = await fetchAlchemyTokenMetadata(token.contractAddress, chain);
+
+              // Convert hex balance to decimal string
+              const balance = parseInt(token.tokenBalance, 16).toString();
+
+              return {
+                address: token.contractAddress as Address,
+                symbol: metadata.symbol || 'UNKNOWN',
+                name: metadata.name || 'Unknown Token',
+                balance: balance,
+                decimals: metadata.decimals || 18,
+                usdPrice: 0, // We can add price data later if needed
+                usdValue: 0, // We can calculate this later if we have price data
+                logo: metadata.logo || undefined,
+              };
+            } catch (error) {
+              console.error(`Error fetching metadata for token ${token.contractAddress}:`, error);
+              return null;
+            }
+          })
+        );
+
+        // Filter out null values (tokens with errors)
+        const validTokens = tokensWithMetadata.filter((token): token is TokenBalance => token !== null);
+
+        // Filter out tokens with zero balance
+        return validTokens.filter(token => {
+          const numericBalance = parseInt(token?.balance!);
+          return numericBalance > 0;
+        });
       } catch (error) {
         console.error('Error fetching tokens:', error);
         throw error;
@@ -118,7 +234,7 @@ export const useAccountTokens = (address?: Address) => {
 // Hook for getting portfolio total value
 export const usePortfolioValue = (address?: Address) => {
   const { data: tokens = [] } = useAccountTokens(address);
-  
+
   const totalValue = tokens.reduce((sum, token) => {
     return sum + (token.usdValue || 0);
   }, 0);

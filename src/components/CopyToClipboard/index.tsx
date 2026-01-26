@@ -1,7 +1,5 @@
 import { type ReactNode, useState } from 'react';
 import { View, TouchableOpacity } from 'react-native';
-import * as Clipboard from 'expo-clipboard';
-import { toast } from 'sonner-native';
 
 interface CopyTextComponentProps {
   textToCopy: string;
@@ -24,22 +22,22 @@ const CopyTextComponent = ({
 
   const handleCopy = async () => {
     try {
-      await Clipboard.setStringAsync(textToCopy);
+      // await Clipboard.setStringAsync(textToCopy);
       setCopied(true);
-      toast(feedbackMessage || 'Address copied to clipboard', { duration: 1000 });
-      
+      // toast(feedbackMessage || 'Address copied to clipboard', { duration: 1000 });
+
       // Reset copied state after duration
       setTimeout(() => setCopied(false), 2400);
-      
+
       // TODO: Implement clearing clipboard functionality if needed
       if (clearClipboard) {
         setTimeout(() => {
-          Clipboard.setStringAsync('');
+          // Clipboard.setStringAsync('');
         }, 5000);
       }
     } catch (error) {
       console.error('Failed to copy text to clipboard:', error);
-      toast('Failed to copy to clipboard', { duration: 2000 });
+      // toast('Failed to copy to clipboard', { duration: 2000 });
     }
   };
 

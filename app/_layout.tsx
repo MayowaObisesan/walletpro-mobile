@@ -69,6 +69,7 @@ function RootLayoutNav() {
 							screenOptions={{
 								headerShown: false,
 								// contentStyle: { backgroundColor: isDarkColorScheme ? DARK_THEME.colors.background : LIGHT_THEME.colors.background }
+								gestureDirection: "horizontal",
 							}}
 						>
 							<Stack.Screen
@@ -95,7 +96,7 @@ function RootLayoutNav() {
 							/>
 						</Stack>
 
-						<Toaster
+						{/*<Toaster
 							position="top-center"
 							offset={120}
 							duration={4000}
@@ -114,7 +115,7 @@ function RootLayoutNav() {
 								},
 							}}
 							pauseWhenPageIsHidden
-						/>
+						/>*/}
 					</SafeAreaView>
 				</SafeAreaProvider>
 				<PortalHost />
