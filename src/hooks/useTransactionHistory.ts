@@ -35,7 +35,7 @@ const fetchAlchemyTransfers = async (
     throw new Error('Alchemy API key not found in environment variables');
   }
 
-  console.log("[FetchAlchemyTransfers] inside fetchAlchemyTransfers API KEY", chain.rpcBaseUrl);
+  console.log("[FetchAlchemyTransfers] inside fetchAlchemyTransfers API KEY", chain.rpcUrls.alchemy.http[0]);
 
   // Build request body
   const requestBody: any = {
@@ -56,7 +56,7 @@ const fetchAlchemyTransfers = async (
   };
 
   // Determine the correct RPC URL based on chain
-  let rpcUrl: string;
+  /*let rpcUrl: string;
   switch (chain.id) {
     case 1: // Ethereum Mainnet
       rpcUrl = `https://eth-mainnet.g.alchemy.com/v2/${apiKey}`;
@@ -78,10 +78,12 @@ const fetchAlchemyTransfers = async (
       break;
     default:
       throw new Error(`Unsupported chain ID: ${chain.id}`);
-  }
+  }*/
+
+  const rpcUrl = `${chain.rpcUrls.alchemy.http[0]}/${apiKey}`
 
   // const rpcUrl = chain.rpcUrls.default.http;
-  console.log("[FetchAlchemyTransfers] rpcUrl", rpcUrl, chain.rpcBaseUrl);
+  console.log("[FetchAlchemyTransfers] rpcUrl", rpcUrl, chain.rpcUrls.alchemy.http[0]);
   const response = await fetch(rpcUrl, {
     method: 'POST',
     headers: {

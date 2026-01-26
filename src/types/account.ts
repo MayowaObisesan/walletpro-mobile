@@ -25,6 +25,7 @@ export interface TokenBalance {
   usdValue?: number
   priceChange24h?: number
   coinGeckoId?: string
+  logo?: string
 }
 
 export interface StoredAccounts {
